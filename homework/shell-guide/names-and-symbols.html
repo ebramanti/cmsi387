@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="favicon.ico">
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="command-crib-sheet.css" rel="stylesheet">
+    <link href="shell-guides.css" rel="stylesheet">
   </head>
   <body data-spy="scroll" data-target=".scrolling-nav-bar">
     <div class="navbar-fixed-top">
@@ -50,33 +50,20 @@
         </div>
       </div>
       <div class="col-md-9">
-        <div id="cd">
-          <h1> cd </h1>
-          <h4 class="description"><code>cd</code> is the notation for changing directories in Unix.</h4>
-          <h4> Example: </h4>
-          <pre> Edwards-MacBook-Air:CMSI Edward$ <strong>cd cmsi387/</strong> </pre>
-          <h4 class="invocation-explanation">In the above example, cd will direct the user from the current folder, <code>CMSI</code>, to the directory <code>cmsi387/</code>. If <code>cd</code> is entered without any arguments, it will take the user to the home directory.</h4> 
+        <div id="home">
+          <h1> HOME </h1>
+          <h4 class="description"><code>HOME</code> is the variable notation for the home directory of the user.</h4>
         </div>
-        <div id="date">
-          <h1> date </h1>
-          <h4 class="description"> <code>date</code> prints/sets the system time/date.</h4>
-          <h4> Example: </h4>
-          <pre>
-Edwards-MacBook-Air:cmsi387 Edward$ <strong>date</strong>
-Wed Jan 1 12:00:01 PST 2014</pre>
-          <h4 class="invocation-explanation">When <code>date</code> is entered into the shell above, it returns the current date, time, and time zone in the shell. To modify or change the date, invoke <code>date 042708002010</code> (this will change computer date to April 27, 2010 8:00am).</h4> 
+        <div id="lang">
+          <h1> LANG </h1>
+          <h4 class="description"> <code>LANG</code> is a variable that determines the locale category for native language, which can be used to determine the language to use for error messages, instructions, etc.</h4>
         </div>
-        <div id="ls">
-          <h1> ls </h1>
-          <h4 class="description"><code>ls</code> lists the current directory's contents.</h4>
-          <h4> Example: </h4>
-          <pre>
-Edwards-MacBook-Air:cmsi387 Edward$ <strong>ls</strong>
-README.md homework</pre>
-          <h4 class="invocation-explanation">The example shows the current directory is <code>cmsi387</code>. When ls is entered into the command line, it shows all the current files and subfolders located within the directory.</h4> 
+        <div id="path">
+          <h1> PATH </h1>
+          <h4 class="description"><code>PATH</code>is an environment variable specifying a set of directories where executable programs are located.</h4>
         </div>
-        <div id="mkdir">
-          <h1> mkdir </h1>
+        <div id="shell">
+          <h1> SHELL </h1>
           <h4 class="description"> <code>mkdir</code> makes a directory (or subfolder) within the current directory.</h4>
           <h4> Example: </h4>
           <pre>
@@ -85,8 +72,8 @@ Edwards-MacBook-Air:cmsi387 Edward$ ls
 README.md assignments homework</pre>
           <h4 class="invocation-explanation">The example shows the current directory is <code>cmsi387</code>. When <code>mkdir assignments</code> is inputted into the command line, it creates a subfolder in the current directory (<strong>NOTE:</strong> mkdir does not output confirmation of directory creation). Therefore, using the command <code><a href="#ls">ls</a></code> that was explained above, we discover that indeed mkdir created a new subfolder in the <code>cmsi387</code> directory (in this case, <code>assignments</code>).</h4> 
         </div>
-        <div id="rm">
-          <h1> rm </h1>
+        <div id="user">
+          <h1> USER </h1>
           <h4 class="description"> <code>rm</code> removes files or directories from the current directory.</h4>
           <h4> Example: </h4>
           <pre>
@@ -97,8 +84,8 @@ Edwards-MacBook-Air:cmsi387 Edward$ ls
 README.md assignments homework</pre>
           <h4 class="invocation-explanation">In this example, <code>rm</code> is called on <code>junk.txt</code>, which subsequently deletes the file without any output confirmation. <code><a href="#ls">ls</a></code> shows that the file is indeed deleted when the command is invoked like so (<strong>NOTE:</strong> <code>rm</code> does not work when applied to folders unless invoked like so: <code>rm -rf directory</code>).</h4> 
         </div>
-        <div id="ssh">
-          <h1> ssh </h1>
+        <div id="tilde">
+          <h1> ~ </h1>
           <h4 class="description"> <code>ssh</code> utilizes the OpenSSH client to allow for the user to login to a remote machine and execute commands.</h4>
           <h4> Example: </h4>
           <pre>
@@ -106,8 +93,8 @@ Edwards-MacBook-Air:cmsi387 Edward$ <strong>ssh user@my.cs.lmu.edu</strong>
 user@my.cs.lmu.edu's password: </pre>
           <h4 class="invocation-explanation"><code>ssh</code> requires two entries: a valid username that has the correct permissions and the hostname of the remote machine (in this case, <code>user</code> and <code>my.cs.lmu.edu</code>). If entry is successful, the terminal will prompt for a password, and connect you to the remote host after entry.</h4> 
         </div>
-        <div id="su">
-          <h1> su </h1>
+        <div id="pipes">
+          <h1> || </h1>
           <h4 class="description"> <code>su</code> runs a Bash shell with "super user" permissions, allowing the user to change the current account associated with the running console.</h4>
           <h4> Example: </h4>
           <pre>
@@ -116,8 +103,8 @@ Password:
 bash-3.2#</pre>
           <h4 class="invocation-explanation">Invoking <code>su</code> prompts the user for a password (in order to prevent unauthorized access to superuser permissions). With correct entry, users have access to the virtual console with administrator privileges.</h4> 
         </div>
-        <div id="sudo">
-          <h1> sudo </h1>
+        <div id="star">
+          <h1> * </h1>
           <h4 class="description"> <code>sudo</code> allows a user with proper permissions to execute a command as the superuser (or, in some cases, another user).</h4>
           <h4> Example: </h4>
           <pre>
@@ -125,8 +112,8 @@ Edwards-MacBook-Air:cmsi387 Edward$ <strong>sudo bash</strong>
 bash-3.2#</pre>
           <h4 class="invocation-explanation">In this example, <code>sudo bash</code> is extremely similar to simply evoking <code><a href="#su">su</a></code>. With <code>sudo</code>, depending on the permission authority of your user account you may not even require a root password (as shown in the example above, account Edward is an administrator account).</h4> 
         </div>
-        <div id="uptime">
-          <h1> uptime </h1>
+        <div id="exclamation-point">
+          <h1> ! </h1>
           <h4 class="description"> <code>uptime</code> shows how long the system has been running.</h4>
           <h4> Example: </h4>
           <pre>
@@ -140,8 +127,8 @@ Edwards-MacBook-Air:tbramant-site Edward$ <strong>uptime</strong>
             <li>the system load averages for the past 1/5/15 minutes.</li>
           </h4> 
         </div>
-        <div id="whoami">
-          <h1> whoami </h1>
+        <div id="semicolon">
+          <h1> ; </h1>
           <h4 class="description"> <code>whoami</code> displays your username in the UNIX shell.</h4>
           <h4> Example: </h4>
           <pre>
