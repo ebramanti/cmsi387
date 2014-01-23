@@ -35,13 +35,13 @@
               <a href="#ssh">ssh</a>
             </li>
             <li>
-              <a href="#license-faqs">License FAQs</a>
+              <a href="#whoami">whoami</a>
             </li>
             <li>
-              <a href="#customizing">Customizing Bootstrap</a>
+              <a href="#su">Customizing Bootstrap</a>
             </li>
             <li>
-              <a href="#">gg</a>
+              <a href="#sudo">gg</a>
             </li>   
             <li>
               <a href="#">no re</a>
@@ -106,32 +106,42 @@ Edwards-MacBook-Air:cmsi387 Edward$ <strong>ssh user@my.cs.lmu.edu</strong>
 user@my.cs.lmu.edu's password: </pre>
           <h4 class="invocation-explanation"><code>ssh</code> requires two entries: a valid username that has the correct permissions and the hostname of the remote machine (in this case, <code>user</code> and <code>my.cs.lmu.edu</code>). If entry is successful, the terminal will prompt for a password, and connect you to the remote host after entry.</h4> 
         </div>
-        <div id="ls">
-          <h1> ls </h1>
-          <h4 class="description"> <code></code></h4>
+        <div id="whoami">
+          <h1> whoami </h1>
+          <h4 class="description"> <code>whoami</code> displays your username in the UNIX shell.</h4>
           <h4> Example: </h4>
-          <pre></pre>
-          <h4 class="invocation-explanation"></h4> 
+          <pre>
+Edwards-MacBook-Air:cmsi387 Edward$ <strong>whoami</strong>
+Edward</pre>
+          <h4 class="invocation-explanation">When <code>whoami</code> is invoked, it returns the user you are currently signed in as on your operating system.</h4> 
         </div>
-        <div id="ls">
-          <h1> ls </h1>
-          <h4 class="description"> <code></code></h4>
+        <div id="sudo">
+          <h1> sudo </h1>
+          <h4 class="description"> <code>sudo</code> allows a user with proper permissions to execute a command as the superuser (or, in some cases, another user).</h4>
           <h4> Example: </h4>
-          <pre></pre>
-          <h4 class="invocation-explanation"></h4> 
+          <pre>
+Edwards-MacBook-Air:cmsi387 Edward$ <strong>sudo bash</strong>
+bash-3.2#</pre>
+          <h4 class="invocation-explanation">In this example, <code>sudo bash</code> is extremely similar to simply evoking <code><a href="#su">su</a></code>. With <code>sudo</code>, depending on the permission authority of your user account you may not even require a root password (as shown in the example above, account Edward is an administrator account).</h4> 
         </div>
-        <div id="ls">
-          <h1> ls </h1>
-          <h4 class="description"> <code></code></h4>
+                <div id="ls">
+          <h1> su </h1>
+          <h4 class="description"> <code>su</code> runs a Bash shell with "super user" permissions, allowing the user to change the current account associated with the running console.</h4>
           <h4> Example: </h4>
-          <pre></pre>
-          <h4 class="invocation-explanation"></h4> 
+          <pre>
+Edwards-MacBook-Air:cmsi387 Edward$ <strong>su</strong>
+Password:
+bash-3.2#</pre>
+          <h4 class="invocation-explanation">Invoking <code>su</code> prompts the user for a password (in order to prevent unauthorized access to superuser permissions). With correct entry, users have access to the virtual console with administrator privileges.</h4> 
         </div>
-        <div id="ls">
-          <h1> ls </h1>
-          <h4 class="description"> <code></code></h4>
+        <div id="uptime">
+          <h1> uptime </h1>
+          <h4 class="description"> <code>uptime</code></h4>
           <h4> Example: </h4>
-          <pre></pre>
+          <pre>
+Edwards-MacBook-Air:tbramant-site Edward$ <strong>uptime</strong>
+1:17  up 27 days,  9:29, 3 users, load averages: 2.57 2.19 2.05
+          </pre>
           <h4 class="invocation-explanation"></h4> 
         </div>
       </div>
