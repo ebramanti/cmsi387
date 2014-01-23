@@ -2,6 +2,10 @@
     margin-top: 80px;
 }
 
+.description {
+    margin-bottom: 20px;
+}
+
 #centered-nav {
     margin: 0 auto;
 }
