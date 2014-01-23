@@ -9,3 +9,7 @@
 li.active a {
         color: red;
 }
+
+.invocation-explanation {
+    margin-bottom: 100px;
+}
