@@ -32,7 +32,7 @@
               <a href="#date">date</a>
             </li>
             <li>
-              <a href="#accessibility">Accessibility</a>
+              <a href="#ssh">ssh</a>
             </li>
             <li>
               <a href="#license-faqs">License FAQs</a>
@@ -93,16 +93,18 @@ README.md assignments homework</pre>
           <h4 class="description"> <code>date</code> prints/sets the system time/date.</h4>
           <h4> Example: </h4>
           <pre>
-Edwards-MacBook-Air:cmsi387 Edward$ date
+Edwards-MacBook-Air:cmsi387 Edward$ <strong>date</strong>
 Wed Jan 1 12:00:01 PST 2014</pre>
           <h4 class="invocation-explanation">When <code>date</code> is entered into the shell above, it returns the current date, time, and time zone in the shell. To modify or change the date, invoke <code>date 042708002010</code> (this will change computer date to April 27, 2010 8:00am).</h4> 
         </div>
-        <div id="ls">
-          <h1> ls </h1>
-          <h4 class="description"> <code></code></h4>
+        <div id="ssh">
+          <h1> ssh </h1>
+          <h4 class="description"> <code>ssh</code> utilizes the OpenSSH client to allow for the user to login to a remote machine and execute commands.</h4>
           <h4> Example: </h4>
-          <pre></pre>
-          <h4 class="invocation-explanation"></h4> 
+          <pre>
+Edwards-MacBook-Air:cmsi387 Edward$ <strong>ssh user@my.cs.lmu.edu</strong>
+user@my.cs.lmu.edu's password: </pre>
+          <h4 class="invocation-explanation"><code>ssh</code> requires two entries: a valid username that has the correct permissions and the hostname of the remote machine (in this case, <code>user</code> and <code>my.cs.lmu.edu</code>). If entry is successful, the terminal will prompt for a password, and connect you to the remote host after entry.</h4> 
         </div>
         <div id="ls">
           <h1> ls </h1>
