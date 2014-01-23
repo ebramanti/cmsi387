@@ -26,10 +26,10 @@
               <a href="#mkdir">mkdir</a>
             </li>
             <li>
-              <a href="#browsers">Browser support</a>
+              <a href="#rm">rm</a>
             </li>
             <li>
-              <a href="#third-parties">Third party support</a>
+              <a href="#date">date</a>
             </li>
             <li>
               <a href="#accessibility">Accessibility</a>
@@ -65,24 +65,31 @@ README.md homework</pre>
           <h4 class="description"> <code>mkdir</code> makes a directory (or subfolder) within the current directory.</h4>
           <h4> Example: </h4>
           <pre>
-Edwards-MacBook-Air:cmsi387 Edward$ mkdir assignments
+Edwards-MacBook-Air:cmsi387 Edward$ <strong>mkdir assignments</strong>
 Edwards-MacBook-Air:cmsi387 Edward$ ls
 README.md assignments homework</pre>
           <h4 class="invocation-explanation">The example shows the current directory is <code>cmsi387</code>. When <code>mkdir assignments</code> is inputted into the command line, it creates a subfolder in the current directory (<strong>NOTE:</strong> mkdir does not output confirmation of directory creation). Therefore, using the command <code><a href="#ls">ls</a></code> that we used above, we discover that indeed mkdir created a new subfolder in the <code>cmsi387</code> directory (in this case, <code>assignments</code>).</h4> 
         </div>
-        <div id="ls">
-          <h1> ls </h1>
-          <h4 class="description"> <code></code></h4>
+        <div id="rm">
+          <h1> rm </h1>
+          <h4 class="description"> <code>rm</code> removes files or directories from the current directory.</h4>
           <h4> Example: </h4>
-          <pre></pre>
-          <h4 class="invocation-explanation"></h4> 
+          <pre>
+Edwards-MacBook-Air:cmsi387 Edward$ ls
+README.md assignments homework  junk.txt
+Edwards-MacBook-Air:cmsi387 Edward$ <strong>rm junk.txt</strong>
+Edwards-MacBook-Air:cmsi387 Edward$ ls
+README.md assignments homework</pre>
+          <h4 class="invocation-explanation">In this example, <code>rm</code> is called on <code>junk.txt</code>, which subsequently deletes the file without any output confirmation. <code><a href="#ls">ls</a></code> shows that the file is indeed deleted when the command is invoked like so (<strong>NOTE:</strong> <code>rm</code> does not work when applied to folders unless invoked like so: <code>rm -rf directory</code>).</h4> 
         </div>
-        <div id="ls">
-          <h1> ls </h1>
-          <h4 class="description"> <code></code></h4>
+        <div id="date">
+          <h1> date </h1>
+          <h4 class="description"> <code>date</code> prints/sets the system time/date.</h4>
           <h4> Example: </h4>
-          <pre></pre>
-          <h4 class="invocation-explanation"></h4> 
+          <pre>
+Edwards-MacBook-Air:cmsi387 Edward$ date
+Wed Jan 1 12:00:01 PST 2014</pre>
+          <h4 class="invocation-explanation">When <code>date</code> is entered into the shell above, it returns the current date, time, and time zone in the shell. To modify or change the date, invoke <code>date 042708002010</code> (this will change computer date to April 27, 2010 8:00am).</h4> 
         </div>
         <div id="ls">
           <h1> ls </h1>
