@@ -26,10 +26,10 @@
               <a href="#path">PATH</a>
             </li>
             <li>
-              <a href="#shell">SHELL</a>
+              <a href="#devnull">/dev/null</a>
             </li>
             <li>
-              <a href="#user">USER</a>
+              <a href="#ampersand">&</a>
             </li>
             <li>
               <a href="#tilde">~</a>
@@ -52,89 +52,47 @@
       <div class="col-md-9">
         <div id="home">
           <h1> HOME </h1>
-          <h4 class="description"><code>HOME</code> is the variable notation for the home directory of the user.</h4>
+          <h4 class="name-symbol-description"><code>HOME</code> is the variable notation for the home directory of the user.</h4>
         </div>
         <div id="lang">
           <h1> LANG </h1>
-          <h4 class="description"> <code>LANG</code> is a variable that determines the locale category for native language, which can be used to determine the language to use for error messages, instructions, etc.</h4>
+          <h4 class="name-symbol-description"> <code>LANG</code> is a variable that determines the locale category for native language, which can be used to determine the language to use for error messages, instructions, etc.</h4>
         </div>
         <div id="path">
           <h1> PATH </h1>
-          <h4 class="description"><code>PATH</code>is an environment variable specifying a set of directories where executable programs are located.</h4>
+          <h4 class="name-symbol-description"><code>PATH</code>is an environment variable specifying a set of directories where executable programs are located.</h4>
         </div>
-        <div id="shell">
-          <h1> SHELL </h1>
-          <h4 class="description"> <code>mkdir</code> makes a directory (or subfolder) within the current directory.</h4>
-          <h4> Example: </h4>
-          <pre>
-Edwards-MacBook-Air:cmsi387 Edward$ <strong>mkdir assignments</strong>
-Edwards-MacBook-Air:cmsi387 Edward$ ls
-README.md assignments homework</pre>
-          <h4 class="invocation-explanation">The example shows the current directory is <code>cmsi387</code>. When <code>mkdir assignments</code> is inputted into the command line, it creates a subfolder in the current directory (<strong>NOTE:</strong> mkdir does not output confirmation of directory creation). Therefore, using the command <code><a href="#ls">ls</a></code> that was explained above, we discover that indeed mkdir created a new subfolder in the <code>cmsi387</code> directory (in this case, <code>assignments</code>).</h4> 
+        <div id="devnull">
+          <h1> /dev/null </h1>
+          <h4 class="name-symbol-description"> <code>/dev/null</code> is an infinite data source/sink; data written to <code>/dev/null</code> is discarded, and reads from <code>/dev/null</code> shall always return end-of-file.</h4>
         </div>
-        <div id="user">
-          <h1> USER </h1>
-          <h4 class="description"> <code>rm</code> removes files or directories from the current directory.</h4>
-          <h4> Example: </h4>
-          <pre>
-Edwards-MacBook-Air:cmsi387 Edward$ ls
-README.md assignments homework  junk.txt
-Edwards-MacBook-Air:cmsi387 Edward$ <strong>rm junk.txt</strong>
-Edwards-MacBook-Air:cmsi387 Edward$ ls
-README.md assignments homework</pre>
-          <h4 class="invocation-explanation">In this example, <code>rm</code> is called on <code>junk.txt</code>, which subsequently deletes the file without any output confirmation. <code><a href="#ls">ls</a></code> shows that the file is indeed deleted when the command is invoked like so (<strong>NOTE:</strong> <code>rm</code> does not work when applied to folders unless invoked like so: <code>rm -rf directory</code>).</h4> 
+        <div id="ampersand">
+          <h1> & </h1>
+          <h4 class="name-symbol-description"> <code>&</code> runs and executes the command and gives you the prompt back right away (works in background).
         </div>
         <div id="tilde">
           <h1> ~ </h1>
-          <h4 class="description"> <code>ssh</code> utilizes the OpenSSH client to allow for the user to login to a remote machine and execute commands.</h4>
-          <h4> Example: </h4>
-          <pre>
-Edwards-MacBook-Air:cmsi387 Edward$ <strong>ssh user@my.cs.lmu.edu</strong>
-user@my.cs.lmu.edu's password: </pre>
-          <h4 class="invocation-explanation"><code>ssh</code> requires two entries: a valid username that has the correct permissions and the hostname of the remote machine (in this case, <code>user</code> and <code>my.cs.lmu.edu</code>). If entry is successful, the terminal will prompt for a password, and connect you to the remote host after entry.</h4> 
+          <h4 class="name-symbol-description"> <code>~</code> represents several different pathnames:
+            <li>Home directory</li>
+            <li>Current, or previous, working directory</li>
+            <li>Directory from directory stack</li>
+          </h4>
         </div>
         <div id="pipes">
           <h1> || </h1>
-          <h4 class="description"> <code>su</code> runs a Bash shell with "super user" permissions, allowing the user to change the current account associated with the running console.</h4>
-          <h4> Example: </h4>
-          <pre>
-Edwards-MacBook-Air:cmsi387 Edward$ <strong>su</strong>
-Password:
-bash-3.2#</pre>
-          <h4 class="invocation-explanation">Invoking <code>su</code> prompts the user for a password (in order to prevent unauthorized access to superuser permissions). With correct entry, users have access to the virtual console with administrator privileges.</h4> 
+          <h4 class="name-symbol-description"> <code>||</code> is the logical OR operator. If the exit status of the first command is not 0, then execute the second command.</h4>
         </div>
         <div id="star">
           <h1> * </h1>
-          <h4 class="description"> <code>sudo</code> allows a user with proper permissions to execute a command as the superuser (or, in some cases, another user).</h4>
-          <h4> Example: </h4>
-          <pre>
-Edwards-MacBook-Air:cmsi387 Edward$ <strong>sudo bash</strong>
-bash-3.2#</pre>
-          <h4 class="invocation-explanation">In this example, <code>sudo bash</code> is extremely similar to simply evoking <code><a href="#su">su</a></code>. With <code>sudo</code>, depending on the permission authority of your user account you may not even require a root password (as shown in the example above, account Edward is an administrator account).</h4> 
+          <h4 class="name-symbol-description"> <code>*</code> is a symbol that allows string matching of any characters, including null.</h4>
         </div>
         <div id="exclamation-point">
           <h1> ! </h1>
-          <h4 class="description"> <code>uptime</code> shows how long the system has been running.</h4>
-          <h4> Example: </h4>
-          <pre>
-Edwards-MacBook-Air:tbramant-site Edward$ <strong>uptime</strong>
-1:17  up 27 days,  9:29, 3 users, load averages: 2.57 2.19 2.05
-          </pre>
-          <h4 class="invocation-explanation">When uptime is invoked, it returns:
-            <li>The current time</li>
-            <li>How long the system has been running</li>
-            <li>How many users are currently logged on</li>
-            <li>the system load averages for the past 1/5/15 minutes.</li>
-          </h4> 
+          <h4 class="name-symbol-description"> <code>!</code> executes the most .</h4>
         </div>
         <div id="semicolon">
           <h1> ; </h1>
-          <h4 class="description"> <code>whoami</code> displays your username in the UNIX shell.</h4>
-          <h4> Example: </h4>
-          <pre>
-Edwards-MacBook-Air:cmsi387 Edward$ <strong>whoami</strong>
-Edward</pre>
-          <h4 class="invocation-explanation">When <code>whoami</code> is invoked, it returns the user you are currently signed in as on your operating system.</h4> 
+          <h4 class="name-symbol-description"> <code>;</code> forces the next command to wait till the previous command has finished.</h4>
         </div>
       </div>
     </div>
