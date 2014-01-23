@@ -10,7 +10,7 @@
   </head>
   <body data-spy="scroll" data-target=".thingy">
     <div class="navbar-fixed-top">
-        <h1>Command Crib Sheet</h1>
+        <h2>Unix Command Crib Sheet</h2>
     </div>
     <div class="container">
       <div class="col-md-3">
@@ -23,7 +23,7 @@
               <a href="#ls">ls</a>
             </li>
             <li>
-              <a href="#disable-responsive">Disabling responsiveness</a>
+              <a href="#mkdir">mkdir</a>
             </li>
             <li>
               <a href="#browsers">Browser support</a>
@@ -60,12 +60,15 @@ Edwards-MacBook-Air:cmsi387 Edward$ <strong>ls</strong>
 README.md homework</pre>
           <h4 class="invocation-explanation">The example shows the current directory is <code>cmsi387</code>. When ls is entered into the command line, it shows all the current files and subfolders located within the directory.</h4> 
         </div>
-        <div id="">
-          <h1> ls </h1>
-          <h4 class="description"> <code></code></h4>
+        <div id="mkdir">
+          <h1> mkdir </h1>
+          <h4 class="description"> <code>mkdir</code> makes a directory (or subfolder) within the current directory.</h4>
           <h4> Example: </h4>
-          <pre></pre>
-          <h4 class="invocation-explanation"></h4> 
+          <pre>
+Edwards-MacBook-Air:cmsi387 Edward$ mkdir assignments
+Edwards-MacBook-Air:cmsi387 Edward$ ls
+README.md assignments homework</pre>
+          <h4 class="invocation-explanation">The example shows the current directory is <code>cmsi387</code>. When <code>mkdir assignments</code> is inputted into the command line, it creates a subfolder in the current directory (<strong>NOTE:</strong> mkdir does not output confirmation of directory creation). Therefore, using the command <code><a href="#ls">ls</a></code> that we used above, we discover that indeed mkdir created a new subfolder in the <code>cmsi387</code> directory (in this case, <code>assignments</code>).</h4> 
         </div>
         <div id="ls">
           <h1> ls </h1>
