@@ -8,14 +8,14 @@
     <link href="http://getbootstrap.com/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="command-crib-sheet.css" rel="stylesheet">
   </head>
-  <body data-spy="scroll" data-target=".thingy">
+  <body data-spy="scroll" data-target=".scrolling-nav-bar">
     <div class="navbar-fixed-top">
         <h2>Unix Command Crib Sheet</h2>
     </div>
-    <div class="container">
+    <div class="container scrolling-nav-bar">
       <div class="col-md-3">
         <div id="centered-nav" class="bs-sidebar hidden-print affix">
-          <nav id="thingy" class="nav bs-sidenav">
+          <ul id="scrolling-nav-bar" class="nav bs-sidenav">
             <li>
               <a href="#cd">cd</a>
             </li>
@@ -157,4 +157,11 @@ Edward</pre>
   <!-- Placed at the end of the document so the pages load faster -->
   <script src="http://code.jquery.com/jquery-git.js"></script>
   <script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+  <!-- Javascript placed inline due to small size of script.
+       Needed to execute the scrollspy. -->
+  <script type="text/javascript">
+    $('body').scrollspy({
+        target: '.scrolling-nav-bar'
+    });
+</script>
 </html>

@@ -6,6 +6,6 @@
     margin-bottom: 20px;
 }
 
-#centered-nav {
-    margin: 0 auto;
+li.active a {
+        color: red;
 }
