@@ -1,0 +1,15 @@
+.col-md-3 {
+    margin-top: 80px;
+}
+
+.description {
+    margin-bottom: 20px;
+}
+
+li.active a {
+        color: red;
+}
+
+.invocation-explanation {
+    margin-bottom: 100px;
+}
