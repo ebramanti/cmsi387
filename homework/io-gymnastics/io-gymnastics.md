@@ -7,4 +7,4 @@ I/O Gymnastics
 
 Submit a screenshot of your successful connection to the remote service via the tunnel.
 
-![Screenshot](https://raw.github.com/jadengore/cmsi387/master/homework/shell-gymnastics/ssh-tunnel.png)
+![Screenshot](https://raw.github.com/jadengore/cmsi387/master/homework/io-gymnastics/ssh-tunnel.png)
