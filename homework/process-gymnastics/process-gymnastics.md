@@ -262,3 +262,28 @@ A lot of the applications that are currently running are my working applications
     0   701 ttys001    0:00.02 login -pfl Edward /bin/bash -c exec -la bash /bin/bash
     501   702 ttys001    0:00.20 -bash
     0 11556 ttys001    0:00.01 ps -u Edward
+
+##4. Login to my.cs.lmu.edu. Who else, other than root and you, has processes running at that time? 
+
+#####Answer
+
+For this command, I used 5 commands piped together. `ps aux` shows all processes for all users. From there, I used `grep` to narrow my search space. I gave a pattern that checked at the beginning of each line and removed all those containing tbramant and root (required as part of question). From there, I returned only USER from the normal dump of text. From there, I combined `sort | uniq` to return only once each process running.
+
+#####Command
+
+    ps aux | grep ^[^tbramant^root] | awk '{print$1}' | sort | uniq
+
+#####Text Dump
+
+    1000
+    102
+    cblokker
+    daemon
+    dondi
+    jpiatos
+    postfix
+    statd
+    syslog
+    USER
+    www-data
+    zkansil
