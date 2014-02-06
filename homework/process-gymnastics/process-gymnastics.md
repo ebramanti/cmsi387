@@ -272,22 +272,22 @@ b) Pretty much the same thing, just on step 2 I printed the real memory value in
 
 #####Command
 
-a)
+a) Virtual Memory
     
     ps aux | awk '{print $5"\t"$11}' | sort -n -r | sed -n '1p' | awk '{print $2}'
 
-b)
+b) Real Memory
 
     ps aux | awk '{print $6"\t"$11}' | sort -n -r | sed -n '1p' | awk '{print $2}'
 
 
 #####Text Dump
 
-a)
+a) Virtual Memory
 
     /Library/PreferencePanes/Growl.prefPane/Contents/Resources/GrowlMenu.app/Contents/MacOS/GrowlMenu
 
-b)
+b) Real Memory
 
     /Applications/Google
 
