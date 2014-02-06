@@ -5,9 +5,11 @@ I/O Gymnastics
 
     ssh -L 2001:my.cs.lmu.edu:80 tbramant@my.cs.lmu.edu
 
-Submit a screenshot of your successful connection to the remote service via the tunnel.
+####Submit a screenshot of your successful connection to the remote service via the tunnel.
 
-![Screenshot](https://raw.github.com/jadengore/cmsi387/master/homework/io-gymnastics/ssh-tunnel.png)
+This is the screenshot of what happened when I accessed localhost:2001/~tbramant/ in my browser.
+
+![Screenshot](ssh-tunnel.png)
 
 ##2. Run something lengthy (`ping`, `vm_stat/vmstat`, loooooong download, finding the quadrillionth prime number...) inside `screen`; logout of that computer entirely, login again, and reconnect to `screen` to prove to yourself that the process has continued to run without interruption.
 
@@ -25,6 +27,8 @@ Submit a screenshot of your successful connection to the remote service via the 
     screen -r
 
 Submit screenshots of your long-running command before you logged out, then after you reconnected to it.
+![Screenshot](screen-part1.png)
+![Screenshot](screen-part2.png)
 
 ##3. Learn how to use du, which tells you how much disk space you’re using in a given directory.
 
@@ -49,7 +53,57 @@ Output
 
     1.3M    cmsi371
 
-##4. On a Keck lab machine,create a file within ~. Run ls -i to determine that file’s inode number. Move this file to another directory inside ~, then move it to /tmp, then move it back to your home directory. After each move, use ls -i to see its inode number.
+##4. On a Keck lab machine, create a file within ~. Run ls -i to determine that file’s inode number. Move this file to another directory inside ~, then move it to /tmp, then move it back to your home directory. After each move, use ls -i to see its inode number.
 
 ####• Submit the output of ls -i both right after you created the file and after each file move.
+
+    tbramant@ab201:~$ vim xfile.txt
+    tbramant@ab201:~$ ls -i
+    14165319 mystery1.o                    14165832 xfile.txt
+    tbramant@ab201:~$ mv xfile.txt ~/Documents
+    tbramant@ab201:~$ cd Documents/
+    tbramant@ab201:~/Documents$ ls -i
+    14158180 CMSI186           14164799 CMSI284    14165832 xfile.txt
+    tbramant@ab201:~/Documents$ mv xfile.txt /tmp
+    tbramant@ab201:~/Documents$ cd /tmp
+    tbramant@ab201:/tmp$ ls -i
+    1972432 hsperfdata_mmalefyt  1973019 xfile.txt
+    tbramant@ab201:/tmp$ mv xfile.txt ~
+    tbramant@ab201:/tmp$ cd ~
+    tbramant@ab201:~$ ls -i
+    14165319 mystery1.o                    14165768 xfile.txt
+
 ####• Submit the piped commands that you would type in order to filter out all lines of ls -i’s output except for the file that you created.
+
+    tbramant@ab201:~$ vim testfile.txt
+    tbramant@ab201:~$ ls -i | grep testfile
+    14165831 testfile.txt
+    tbramant@ab201:~$ mv /~/testfile.txt /~/Desktop/testfile.txt
+    tbramant@ab201:~$ mv testfile.txt ~/Desktop/
+    tbramant@ab201:~$ cd Desktop/
+    tbramant@ab201:~/Desktop$ ls -i | grep testfile
+    14165831 testfile.txt
+    tbramant@ab201:~/Desktop$ mv testfile.txt /tmp/
+    tbramant@ab201:~/Desktop$ cd /tmp
+    tbramant@ab201:/tmp$ ls -i | grep testfile
+    1973019 testfile.txt
+    tbramant@ab201:/tmp$ mv testfile.txt ~
+    tbramant@ab201:/tmp$ ls -i | grep testfile
+    tbramant@ab201:/tmp$ cd ~
+    tbramant@ab201:~$ ls -i | grep testfile
+    14165768 testfile.txt
+
+##5. Pop a few storage devices (CD, DVD, flash drive, network drive, etc.) into your computer. Figure out the mount points for each device.
+
+Command
+
+    mount | grep Volumes
+
+####Submit the output provided by the command.
+
+Output
+
+    /dev/disk1s2 on /Volumes/REFIT (hfs, local, nodev, nosuid, journaled, noowners)
+    /dev/disk1s1 on /Volumes/UNTITLED 1 (msdos, local, nodev, nosuid, noowners)
+    /dev/disk3s2 on /Volumes/VirtualBox (hfs, local, nodev, nosuid, read-only, noowners, quarantine, mounted by Edward)
+    /dev/disk4s1 on /Volumes/UUI (msdos, local, nodev, nosuid, noowners)
