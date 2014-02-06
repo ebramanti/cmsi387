@@ -9,8 +9,7 @@ Using bash and ps, I was able to determine a few of the processes that were curr
 
 #####Command
 
-    Edwards-MacBook-Air:process-gymnastics Edward$ ps -u root
-
+    ps -u root
     
 #####Text Dump
 
@@ -89,7 +88,7 @@ A lot of the applications that are currently running are my working applications
 
 #####Command
 
-    Edwards-MacBook-Air:process-gymnastics Edward$ ps -u Edward
+    ps -u Edward
 
 #####Text Dump
 
@@ -259,11 +258,43 @@ A lot of the applications that are currently running are my working applications
     501 11553 ??         0:01.26 /Applications/Google Chrome.app/Contents/Versions/32.0.1700.102/Google Chrome Helper.app/Con
     501 11554 ??         0:00.08 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/S
     501 11555 ??         0:00.06 /System/Library/Frameworks/CoreServices.framework/Frameworks/Metadata.framework/Versions/A/S
-    0   701 ttys001    0:00.02 login -pfl Edward /bin/bash -c exec -la bash /bin/bash
-    501   702 ttys001    0:00.20 -bash
-    0 11556 ttys001    0:00.01 ps -u Edward
+    0   701   ttys001    0:00.02 login -pfl Edward /bin/bash -c exec -la bash /bin/bash
+    501 702   ttys001    0:00.20 -bash
+    0   11556 ttys001    0:00.01 ps -u Edward
+
+##3. Run a typical working set of applications (e.g., web browser, chat program, text editor, etc.). Which application is using the most memory? The most virtual memory?
+
+#####Answer
+
+a) For this command, I used `ps aux` to print out all the current processes on my computer. From there, I used `awk` to narrow it down to `VSZ` and `COMMAND` columns, since the other information displayed is unnecessary to the question. From there, I used `sort` to sort each line numerically (-r used to reverse values from high to low). Next I used sed (recommended here: http://stackoverflow.com/a/13832926/1166128) to narrow it down to the first value, which is the highest virtual memory usage. Finally, I used `awk` again to print the process name.
+
+b) Pretty much the same thing, just on step 2 I printed the real memory value instead of virtual.
+
+#####Command
+
+a)
+    
+    ps aux | awk '{print $5"\t"$11}' | sort -n -r | sed -n '1p' | awk '{print $2}'
+
+b)
+
+    ps aux | awk '{print $6"\t"$11}' | sort -n -r | sed -n '1p' | awk '{print $2}'
+
+
+#####Text Dump
+
+a)
+
+    /Library/PreferencePanes/Growl.prefPane/Contents/Resources/GrowlMenu.app/Contents/MacOS/GrowlMenu
+
+b)
+
+    /Applications/Google
+
 
 ##4. Login to my.cs.lmu.edu. Who else, other than root and you, has processes running at that time? 
+
+
 
 #####Answer
 
