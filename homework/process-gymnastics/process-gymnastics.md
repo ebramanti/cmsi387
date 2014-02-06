@@ -298,7 +298,7 @@ b)
 
 #####Answer
 
-For this command, I used 5 commands piped together. `ps aux` shows all processes for all users. From there, I used `grep` to narrow my search space. I gave a pattern that checked at the beginning of each line and removed all those containing tbramant and root (required as part of question). From there, I returned only USER from the normal dump of text. From there, I combined `sort | uniq` to return only once each process running.
+For this command, I used 5 commands piped together. `ps aux` shows all processes for all users. From there, I used `grep` to narrow my search space. I gave a pattern that checked at the beginning of each line and removed all those containing tbramant and root (required as part of question). From there, I returned only USER from the normal dump of text. Finally, I combined `sort | uniq` to return only once each process running.
 
 #####Command
 
