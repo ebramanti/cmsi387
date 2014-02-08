@@ -292,7 +292,7 @@ b) Real Memory
     /Applications/Google
 
 
-##4. Login to my.cs.lmu.edu. Who else, other than root and you, has processes running at that time? 
+##4. Login to my.cs.lmu.edu. Who else, other than root and you, have processes running at that time? 
 
 
 
