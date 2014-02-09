@@ -47,7 +47,7 @@ Output
 
 I used `du -sh` to represent this output in human-readable format, since showing the amount of space matters. Then I just used a simple grep command to act as a regular expression, in this case, a simple one that can only return a match of cmsi371.
 
-    Edwards-MacBook-Air:CMSI Edward$ du | grep cmsi371
+    Edwards-MacBook-Air:CMSI Edward$ du -sh * | grep cmsi371
     
 Output
 
