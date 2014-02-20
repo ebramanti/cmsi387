@@ -8,5 +8,9 @@
 int main (int argc, char *argv[]) {
     
     int result = syscall (5, argv[1], argv[2]);
-    
+
+    //  If result is -1, an error message is thrown.
+    if (result == -1) {
+        printf("open: %s: %s\n", argv[1], "Error opening/modifying process.");
+    }
 }
