@@ -1,6 +1,10 @@
 //  kill.c, an implementation of a system call in C.
 //  Man page: http://linux.die.net/man/2/kill
 
+//  Included by recommendation of man page.
+#include <sys/types.h>
+#include <signal.h>
+
 #include <stdio.h>
 #include <stdlib.h>
 
