@@ -6,7 +6,6 @@
 #include <stdlib.h>
 
 int main (int argc, char *argv[]) {
-    printf("%s %s\n", argv[1], argv[2]);
     int result = syscall (5, argv[1], atoi(argv[2]));
 
     //  If result is -1, an error message is thrown.
