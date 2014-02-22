@@ -291,6 +291,7 @@ b) Real Memory
 
     /Applications/Google
 
+> JD: I suspect this is really Google Chrome, but `awk` mistook the space between words as a column separator :)
 
 ##4. Login to my.cs.lmu.edu. Who else, other than root and you, have processes running at that time? 
 
