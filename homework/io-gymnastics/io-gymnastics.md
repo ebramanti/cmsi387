@@ -11,6 +11,8 @@ This is the screenshot of what happened when I accessed localhost:2001/~tbramant
 
 ![Screenshot](ssh-tunnel.png)
 
+> JD: This screenshot would be more compelling if you actually included the location bar saying `localhost:2001/~tbramant/`.  Because, you know, that could have come from anywhere :)
+
 ##2. Run something lengthy (`ping`, `vm_stat/vmstat`, loooooong download, finding the quadrillionth prime number...) inside `screen`; logout of that computer entirely, login again, and reconnect to `screen` to prove to yourself that the process has continued to run without interruption.
 
     ssh tbramant@my.cs.lmu.edu
@@ -98,6 +100,8 @@ Output
 Command
 
     mount | grep Volumes
+
+> JD: The Volumes prefix is valid only on Mac OS X. Other operating systems use something different.
 
 ####Submit the output provided by the command.
 
