@@ -48,6 +48,8 @@ Linux kernel folder found in /lib/modules.
 
 ![Screenshot](linux-kernel.png)
 
+> JD: Not quite—this is for kernel *modules*: they are indeed add-ons to the kernel, but not the kernel itself. Not a bad miss though.
+
 #### Startup scripts and/or configuration files
 
 Linux startup & config files found in /etc/init.
