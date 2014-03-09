@@ -11,4 +11,8 @@
 int main(int argc, char *argv[]) {
     syscall(88,  LINUX_REBOOT_MAGIC1,  LINUX_REBOOT_MAGIC2, LINUX_REBOOT_CMD_RESTART);
     //	From man pages: "Successful call to reboot does not return."
+    // JD: LOL obviously right?  Glad you enjoyed the magic number learnage.
+    //
+    // JD: But if unsuccessful...(like if the user is not super)...a little
+    //     acknowledgement would have been nice.
 }

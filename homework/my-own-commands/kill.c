@@ -9,6 +9,9 @@
 #include <stdlib.h>
 
 int main (int argc, char *argv[]) {
+    // JD: A quick null check with accompanying error message would have
+    //     been nice here, to remind the user that your version of kill
+    //     also requires the signal.
     int result = syscall (37, atoi(argv[1]), atoi(argv[2]));
     
     //  If result is equal to -1, man says this is an error.
