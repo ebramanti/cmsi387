@@ -1,0 +1,86 @@
+diff --git a/Makefile b/Makefile
+index 75b36ae..32e5adc 100644
+--- a/Makefile
++++ b/Makefile
+@@ -514,7 +514,7 @@ init-y		:= init/
+ drivers-y	:= drivers/ sound/ firmware/
+ net-y		:= net/
+ libs-y		:= lib/
+-core-y		:= usr/
++core-y		:= usr/ hello/
+ endif # KBUILD_EXTMOD
+ 
+ ifeq ($(dot-config),1)
+diff --git a/arch/arm/include/asm/unistd.h b/arch/arm/include/asm/unistd.h
+index 512cd14..3e932aa 100644
+--- a/arch/arm/include/asm/unistd.h
++++ b/arch/arm/include/asm/unistd.h
+@@ -404,6 +404,7 @@
+ #define __NR_setns			(__NR_SYSCALL_BASE+375)
+ #define __NR_process_vm_readv		(__NR_SYSCALL_BASE+376)
+ #define __NR_process_vm_writev		(__NR_SYSCALL_BASE+377)
++#define __NR_sys_hello                 (__NR_SYSCALL_BASE+378)
+ 
+ /*
+  * The following SWIs are ARM private.
+diff --git a/arch/arm/kernel/calls.S b/arch/arm/kernel/calls.S
+index 463ff4a..37a2bb2 100644
+--- a/arch/arm/kernel/calls.S
++++ b/arch/arm/kernel/calls.S
+@@ -387,6 +387,7 @@
+ /* 375 */	CALL(sys_setns)
+ 		CALL(sys_process_vm_readv)
+ 		CALL(sys_process_vm_writev)
++                CALL(sys_hello)
+ #ifndef syscalls_counted
+ .equ syscalls_padding, ((NR_syscalls + 3) & ~3) - NR_syscalls
+ #define syscalls_counted
+diff --git a/hello/Makefile b/hello/Makefile
+new file mode 100644
+index 0000000..9aea5e8
+--- /dev/null
++++ b/hello/Makefile
+@@ -0,0 +1 @@
++obj-y := sys_hello.o
+diff --git a/hello/sys_hello.c b/hello/sys_hello.c
+new file mode 100644
+index 0000000..6171f5d
+--- /dev/null
++++ b/hello/sys_hello.c
+@@ -0,0 +1,8 @@
++#include <asm/unistd.h>
++#include <linux/kernel.h>
++#include <linux/linkage.h>
++ 
++asmlinkage long sys_hello(void) {
++    printk(KERN_EMERG "Hello world\n");
++    return 0;
++}
+diff --git a/include/asm-generic/unistd.h b/include/asm-generic/unistd.h
+index 991ef01..173239b 100644
+--- a/include/asm-generic/unistd.h
++++ b/include/asm-generic/unistd.h
+@@ -691,9 +691,11 @@ __SC_COMP(__NR_process_vm_readv, sys_process_vm_readv, \
+ #define __NR_process_vm_writev 271
+ __SC_COMP(__NR_process_vm_writev, sys_process_vm_writev, \
+           compat_sys_process_vm_writev)
++#define __NR_sys_helo 272
++__SYSCALL(__NR_sys_hello, sys_hello)
+ 
+ #undef __NR_syscalls
+-#define __NR_syscalls 272
++#define __NR_syscalls 273
+ 
+ /*
+  * All syscalls below here should go away really,
+diff --git a/include/linux/syscalls.h b/include/linux/syscalls.h
+index 3de3acb..f5aac48 100644
+--- a/include/linux/syscalls.h
++++ b/include/linux/syscalls.h
+@@ -857,5 +857,6 @@ asmlinkage long sys_process_vm_writev(pid_t pid,
+ 				      const struct iovec __user *rvec,
+ 				      unsigned long riovcnt,
+ 				      unsigned long flags);
++asmlinkage long sys_hello(void);
+ 
+ #endif
