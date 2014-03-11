@@ -1,0 +1,306 @@
+<!doctype html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <meta name="description" content="A guide for how to build and install the Nexus 4 kernel.">
+        <title>Android Kernel How-To</title>
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.4.2/pure.css">
+        <!--[if lte IE 8]>
+            <link rel="stylesheet" href="side-menu-old-ie.css">
+        <![endif]-->
+        <!--[if gt IE 8]><!-->
+        <link rel="stylesheet" href="side-menu.css">
+        <!--<![endif]-->
+    </head>
+    <body data-spy="scroll" data-target=".menu">
+        <div id="layout">
+            <!-- Menu toggle -->
+            <a href="#menu" id="menuLink" class="menu-link">
+                <!-- Hamburger icon -->
+                <span></span>
+            </a>
+            <div id="menu">
+                <div class="pure-menu pure-menu-open">
+                    <a class="pure-menu-heading" href="#main">MAKO KERNEL</a>
+                    <ul>
+                        <li><a href="#environment">Environment</a></li>
+                        <li><a href="#set-up-kernel">Set Up Kernel</a></li>
+                        <li><a href="#custom-system-call">Custom SysCalls</a></li>
+                        <li><a href="#kernel">Build Kernel</a></li>
+                        <li><a href="#flashable-bootimg">Boot.img</a></li>
+                        <li><a href="#flash-kernel">Flash Kernel</a></li>
+                        <li><a href="#invoke-system-call">Invoke Custom SysCall</a></li>
+                    </ul>
+                </div>
+            </div>
+            <div id="main">
+                <div class="header">
+                    <h1>Build/Flash Kernel on the Nexus 4</h1>
+                    <h2>A short turnkey guide on how to build your own Android kernel and flash it to your Nexus 4.</h2>
+                </div>
+
+                <div class="content">
+                    <div id="environment">
+                        <h2 class="content-subhead">Environment</h2>
+                        <p>
+                            Ubuntu 12.04.4 LTS is *highly* recommended for the installation of the Android kernel. Linux has a lot of dependencies that you need when cross-compiling to ARM architecture, and is highly recommended for those building a kernel for their first time.
+                        </p>
+                        After a fresh install of Ubuntu 12.04.4, you need to set up your environment with a few dependencies.
+                        <li>Git</li>
+                        <p>
+                            In order to pull the kernel code from Google, you are required to have a version of Git installed. Ubuntu does not have this preinstalled, so it must be installed using the <code>apt-get</code> command below:
+                            <pre class="pretty-print"> sudo apt-get install git</pre>
+                        </p>
+                        <li> Library Dependencies </li>
+                        <p>
+                            Linux requires a few dependencies to build the Android kernel on Linux. Execute the code below in your Ubuntu terminal. Be patient... This script could take a while depending on the speed of your internet connection. 
+                        </p>
+<pre class="prettyprint">
+    sudo apt-get install gnupg flex bison gperf build-essential \
+    zip curl zlib1g-dev libc6-dev lib32ncurses5-dev ia32-libs \
+    x11proto-core-dev libx11-dev lib32readline-gplv2-dev lib32z-dev \
+    libgl1-mesa-dev g++-multilib mingw32 tofrodos python-markdown \
+    libxml2-utils xsltproc
+</pre>
+                        <li> Set up folders </li>
+                        <p>
+                            In your working directory, <code> mkdir android-kernel </code> and <code>cd</code> into it. Make two folders in that directory: kernel and toolchain. Both will be needed later when the kernel and ARM toolchain are downloaded from Google source.
+                        </p>
+                        <li> ADB and Fastboot </li>
+                        <p>
+                            The Android Debug Bridge and Fastboot utilities are required to boot into the Nexus 4's bootloader and flash a custom kernel. To install them, you must install platform-tools in the Android SDK onto your computer.
+                        </p>
+                    </div>
+
+                    <div id="set-up-kernel">
+                        <h2 class="content-subhead">Set Up Kernel</h2>
+                        <p> 
+                            Now that the environment is set up, it is time to download two things from source:
+                        </p>
+                        <li> Qualcomm "msm" kernel, specifically for the Nexus 4 (mako) </li>
+                        <li> Android toolchain necessary to cross-compile files </li>
+
+                        <p>
+                            The first step would be to <code>cd android-kernel/kernel</code> folder.
+                        </p>
+
+                        <p>
+                            Next, run this command in order to clone the Android kernel into the /kernel/ directory. The kernel is ~1.4 GB and can take a while to download. It will place the kernel within a directory called <code>mako</code>.
+                        </p>
+                        <code class="pretty-print">git clone https://android.googlesource.com/kernel/msm mako</code>
+
+                        <p>
+                            In addition, <code>cd</code> into the <code>toolchain</code> directory and use this command to download the cross-compiler dependencies.
+                        </p>
+                        <code class="pretty-print">git clone https://android.googlesource.com/platform/prebuilts/gcc/linux-x86/arm/arm-eabi-4.6/</code>
+
+                        <p>Once both of those have completed downloading, cd into the mako directory (<code>kernel/mako</code>). We need to checkout the kernel specifically for the Nexus 4. To see the current version of kernel, <a href="https://android.googlesource.com/kernel/msm/+refs">visit here</a> and look for the most recent version of Mako kernel. 
+                            <img src="assets/kernel.jpg"/>
+                            For this guide, we will be using <code>android-msm-mako-3.4-kitkat-mr1</code>.
+                        </p>
+
+                        <p>You also need to look up the most recent commit for that version of kernel. Visit https://android.googlesource.com/kernel/msm.git/+log/YOUR_KERNEL_VERSION_NAME_HERE, and look at the most recent commit. For <code>android-msm-mako-3.4-kitkat-mr1</code>, the most recent commit version at the time of writing is <code>2cae413</code>.
+
+                        <p><code>cd</code> into <code>kernel/mako</code> and type the following command into your terminal:</code></p>
+                        <code class="pretty-print">git checkout COMMIT_VERSION</code>
+
+                        <p>After typing this, it will notify you that you are in "detached HEAD" state. Run this command to create a new branch for our custom kernel:</p>
+                        <code class="pretty-print">git checkout -b custom_kernel</code>
+
+                        <p>You now have the source code for the Mako kernel. Now we must export the toolchain to the environment PATH variable. Open your file browser into your home directory, and press CTRL+H. This will show all of your hidden files. Open the .profile file in a text editor, and add this line to the end:</p>
+                        <code class="pretty-print">export PATH=$PATH:~/WORKING_DIRECTORY_HERE/android-kernel/toolchain/arm-eabi-4.6/bin</code>
+
+                        <p> The kernel files have now been properly set up and we are ready to build. </p>
+                    </div>
+
+                    <div id="custom-system-call">
+                        <h2 class="content-subhead">Adding a Custom System Call</h2>
+                        <p>To add a custom system call to Android, we must add a few lines of code as well as our custom system call. For this example, we will be adding a simple "Hello, world" system call to the Mako kernel. This example code is used from commit <code>2cae413</code></p>
+                        <ol>
+                            <li>Add /hello folder to root directory of kernel.
+                                <code>cd</code> into the root directory of the kernel, and <code>mkdir hello</code>. The C program and makefile will be placed in here.
+                            </li>
+                            <li>Make two files in <code>hello</code>: <code>sys_hello.c</code> and <code>Makefile</code>.
+                                <p><code>sys_hello.c</code> will contain the source code for our system call, and will print out a message to the kernel log.</p>
+                                <h4>sys-hello.c</h4>
+<pre class="pretty-print">
+#include &lt;asm/unistd.h&gt;
+#include &lt;linux/kernel.h&gt;
+#include &lt;linux/linkage.h&gt;
+
+asmlinkage long sys_hello(void) {
+    printk(KERN_EMERG "Hello world\n");
+    return 0;
+}
+</pre>
+                                <h4>Makefile</h4>
+<pre class="pretty-print">obj-y := sys_hello.o</pre>
+                            </li>
+
+                            <li><code>arch/arm/kernel/calls.S</code>
+
+<pre class="pretty-print">
+...
+/* 375 */   CALL(sys_setns)
+CALL(sys_process_vm_readv)
+CALL(sys_process_vm_writev)
+CALL(sys_hello)             /* a custom system call */
+</pre>
+                            </li>
+                            <li><code>include/linux/syscalls.h</code>
+<pre class="pretty-print">
+...
+asmlinkage long sys_process_vm_writev(pid_t pid,
+              const struct iovec __user *lvec,
+              unsigned long liovcnt,
+              const struct iovec __user *rvec,
+              unsigned long riovcnt,
+              unsigned long flags);
+asmlinkage long sys_hello(void);
+</pre>
+                            </li>
+                            <li><code>arch/arm/include/asm/unistd.h</code>
+<pre class="pretty-print">
+...
+#define __NR_setns                  (__NR_SYSCALL_BASE+375)
+#define __NR_process_vm_readv       (__NR_SYSCALL_BASE+376)
+#define __NR_process_vm_writev      (__NR_SYSCALL_BASE+377)
+#define __NR_sys_hello              (__NR_SYSCALL_BASE+378)
+</pre>
+                            </li>
+                            <li><code>include/asm-generic/unistd.h</code>
+<pre class="pretty-print">
+...
+#define __NR_process_vm_writev 271
+__SC_COMP(__NR_process_vm_writev, sys_process_vm_writev, \
+          compat_sys_process_vm_writev)
+#define __NR_sys_helo 272
+__SYSCALL(__NR_sys_hello, sys_hello)
+
+#undef __NR_syscalls
+#define __NR_syscalls 273
+</pre>
+                            </li>
+                            <li><code>/mako/Makefile</code>
+<pre class="pretty-print">
+...
+core-y      := usr/ hello/
+</pre>
+
+                            </li>
+                        </ol>
+                        <h4>We have now added all the necessary code, and a custom system call has been implemented in the Mako kernel.</h4>
+
+                        <p> If you would like to try out my custom syscall in your kernel, download the patch I made from <a href="custom_syscall_patch">here</a>, put it in your <code>mako</code> directory and run this command:</p>
+                        <code> patch -p1 < custom_syscall_patch </code>
+                        <p> Make sure and commit your changes on your own custom branch as well. It's important later on, and important to keep track of your changes. </p>
+                    </div>
+
+                    <div id="kernel">
+                        <h2 class="content-subhead">Build Kernel</h2>
+                        <p>
+                            Now that the environment is set and the files are in place, we may build the kernel. This can be a complicated process, so follow the steps below in order. Make sure you <code>cd</code> into <code>android-kernel/kernel/mako</code> before beginning.
+                        </p>
+                        <p> Enter the following into your command line, in this order.</p>
+                        <ol>
+                            <li><code>source ~/.profile</code><br />
+                                This imports the PATH variable we added earlier when setting up the environment.
+                            </li>
+                            <li><code>export ARCH=arm</code><br />
+                            </li>
+                            <li><code>export SUBARCH=arm</code><br />
+                            </li>
+                            <li><code>export CROSS_COMPILE=arm-eabi-</code><br />
+                                This looks for the cross-compiler, in this case version 4.6. Leave input as-is, as it will auto-find the cross-compiler.
+                            </li>
+                            <li><code>make mako_defconfig</code><br />
+                                You may receive a few warnings here, nothing to worry about
+                            </li>
+                            <li><code>make</code><br />
+                                You may also add an optional -j to do threaded compiling.
+                                For example, I have an 8-core processor with 16 virtual cores, so I include the -j16 parameter.
+                                This speeds up compile time.
+                            </li>
+                        </ol>
+                        <p>This may take some time to build, be patient. If the kernel builds successfully, you should see a message like this:</p>
+                        <code class="pretty-print">Kernel: arch/arm/boot/zImage is ready</code>
+                        <p>If the kernel runs into PATH errors, make sure that you ran <code>source ~/.profile</code> and have the PATH variable set correctly.</p>
+                    </div>
+
+                    <div id="flashable-bootimg">
+                        <h2 class="content-subhead">Create a Flashable boot.img</h2>
+                        <p>We now have a zImage file located in <code>arch/arm/boot/zImage</code>. This file is the built kernel, but it is not quite ready to be flashed. We must first supply a ramdisk so that we can flash the kernel in fastboot, also known as Android's bootloader command tool.</p>
+                        <p>First we must download the corresponding factory image from <a href="https://developers.google.com/android/nexus/images#occam">here</a>. Since we are using a 4.4.2 kernel for this guide, version KOT49H is what we want to download. After that has downloaded, unzip the file and move the <code>occam-kot49h</code> folder into our <code>android-kernel</code> directory.<br />
+                            Now, <code>cd</code> into <code>occam-k0t49h</code> and unzip <code>image-occam-kot49h.zip</code>, which will output 5 files:</p>
+<pre class="pretty-print">
+    android-info.txt
+    boot.img
+    recovery.img
+    system.img
+    recovery.img
+</pre>
+                        <p>Now we need to obtain a file to take apart the boot.img before we can continue:</p>
+                        <li><a href="zhack">zHack</a> <br />
+                            A utility made by XDA-user arynhard (<a href="http://forum.xda-developers.com/showpost.php?p=37379748&postcount=40">source</a>) that allows ramdisk repackaging so fastboot properly flashes the kernel file.
+                        </li>
+                        <p>Download the zHack file and copy it into your <code>occam-kot49h</code> directory. After you have completed that run the following command:</p>
+                        <code class="pretty-print">./zhack -x boot.img</code>
+                        <p>This will take apart the boot.img file and return 3 files: the boot image configuration file, the kernel, and the ramdisk.</p>
+                        <p>Our goal is to delete the zImage file produced, and replace it with ours located in <code>kernel/mako/arch/arm/boot/zImage</code>. Copy the zImage we produced in that directory to the <code>occam-kot49h</code>, either by deleting the zImage produced in occam or by overwriting it with your own custom zImage.</p>
+                        <p>After you have overwritten that file, run this command:</p>
+                        <code class="pretty-print">./zhack -z boot.img -f bootimg.cfg -k &lt;new zImage&gt; -r initrd.img</code>
+                        <p> That command will output a new flashable boot.img that we can use to flash our custom kernel. </p>
+
+                    </div>
+                    <div id="flash-kernel">
+                        <h2 class="content-subhead">Flash Kernel to Nexus 4</h2>
+                        <p>Make sure you have run the setup for ADB/Fastboot, these are critical for the next steps.</p>
+                        <p>Assuming you are running a stock version of 4.4.2 on your Nexus 4, we are ready to flash the kernel.</p>
+                        <ol>
+                            <li>Make sure that you have enabled developer options in Settings.</li>
+                                If you have not, navigate to About Phone and tap on Build Number a few times until Dev Ops are enabled.
+                            <li>Enable USB debugging in Dev Ops.</li>
+                            <li>Run <code>adb devices</code> to make sure ADB detects your phone.</li>
+                            It may say unauthorized next to your device, make sure to check yes and always for your computer's RSA fingerprint.
+                            <li><code>adb reboot bootloader</code></li>
+                            <li>cd into /android-kernel/occam-kot49h</li>
+                            <li><code>sudo fastboot flash boot boot.img</code></li>
+                            <li>On phone, press power button to Start.</li>
+                        </ol>
+                        <p>If the phone boots, your flash worked! If not, check kernel version versus the software version and make sure you followed the steps. <br />
+                            Now, if you go into "About Phone" in Settings, you should see something like this in Kernel Version.
+                        </p>
+                        <img src="assets/kernel-version.png"/>
+                        <p>And that's a wrap!</p>
+                    <div id="invoke-system-call">
+                        <h2 class="content-subhead">Invoking Custom System Call: How to Proceed</h2>
+                        <p>One of the difficulties of this project compared to creating custom system calls for other Linux kernels is ARM architecture. Since there is no way to compile C easily without either developing an application or using the Native Development Kit (NDK), I have not written out a complete guide on how to call your custom syscall.</p>
+                        <p>However, I have found some resources that might be of use.</p>
+                        <li><a href="http://faculty.winthrop.edu/domanm/csci411/Android/systemCall.htm">Example C program for syscall on Android</a></li> 
+                        This link redirects to a lab where students are told to implement a custom system call. The professor outlined how to call an Android system call in C, and I have modified it to reflect how to call the one implemented above.
+<pre class="pretty-print">
+#include &lt;linux/errno.h&gt;
+#include &lt;sys/syscall.h&gt;
+#include &lt;linux/unistd.h&gt;
+
+_syscall0(int, sys_hello);
+
+int main() {
+  sys_hello();
+}
+</pre>
+                        <p> I believe this to be a strong starting point for how to call the custom system call we made above. If you read the article further, the professor explains the _syscall0 macro and how it translates to assembly architecture. Building this with the NDK may be the key to seeing the output in the kernel logs.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script src="scripts/pureui.js"></script>
+        <script src="scripts/scrollspy.js"></script>
+        <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js"></script>
+
+    </body>
+</html>
