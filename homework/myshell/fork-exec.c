@@ -2,13 +2,15 @@
 #include <stdio.h>
 #include <unistd.h>
 
+#define MAX_COMMAND_LENGTH 256
+
 /**
  * This program demonstrates the use of the fork() and exec()
  * functions.
  */
 int main() {
     /* String to hold the command to run. */
-    char command[256];
+    char command[MAX_COMMAND_LENGTH];
     printf("Enter the command to run: ");
     scanf("%s", command);
 

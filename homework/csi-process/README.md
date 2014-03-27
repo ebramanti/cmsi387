@@ -9,9 +9,20 @@ Use long-running invocations (i.e., huge numbers) of the `thread-java` and/or `t
 
 ####Mac OS
 
-I ram `thread-java` on my Mac first, suspending the process temporarily with `CTRL-Z`. Next, I ran the command `bg && ping localhost` in order to send thread-java to the background as well as run the endlessly running `ping` command in the terminal as well. Screenshot below:
+I ran `thread-java` on my Mac first, suspending the process temporarily with `CTRL-Z`. Next, I ran the command `bg && ping localhost` in order to send thread-java to the background as well as run the endlessly running `ping` command in the terminal as well. Screenshot below:
 ![Mac Process Terminal](MacTerminal.png)
 
-I opened up Activity Monitor, and found the command running under `java`. At the moment I checked it, it had 78 threads, which is given in the Activity Monitor of OS X.
+I opened up Activity Monitor, and found the command running under `java`. At the moment I checked it, it had 19 threads, which is given in the Activity Monitor of OS X. I believe it is showing two in my case because I cancelled and ran again after mistyping my command.
 
 ![Mac Process Activity Monitor](MacActivityMonitor.png)
+
+####Linux
+
+Next, I ran `thread-java` on an Ubuntu virtual machine. I used a very similar process, I invoked the command `java Sum 1000000` and then suspended the process temporarily with `CTRL-Z`. I then ran the same command as on Mac, `bg && ping localhost`, to send the Sum to the background and then `ping localhost`as well. Screenshot below:
+![Ubuntu Process Terminal](LinuxTerminal.png)
+
+I used both Ubuntu's GUI and the command line as an Activity Monitor. I first took a look at the process ID for java in the graphical user interface provided by Ubuntu. It differs from Mac because it does not provide a thread count. Screenshot below:
+![Ubuntu Process Activity Monitor GUI](LinuxGraphicalActivityMonitor.png)
+
+To find the thread count, I knew I needed to use the command line. I called `ps aux | grep java` as extra practice for figuring out the process ID. I found that it returned two values: both the grep call and the actual process we need, `java Sum`. It was clear that the PID was `10204`. I then used the command `ps -o nlwp 10204`, and this allowed me to see the amount of threads running for the sum process. It turned out to be 11.
+![Ubuntu Process Activity Monitor](LinuxActivityMonitor.png)
