@@ -8,6 +8,11 @@
  * This program demonstrates the use of the fork() and exec()
  * functions.
  */
+
+int parseCommand(char* command, char* args) {
+    
+}
+
 int main() {
     /* String to hold the command to run. */
     char command[MAX_COMMAND_LENGTH];
