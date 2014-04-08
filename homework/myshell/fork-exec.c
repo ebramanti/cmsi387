@@ -12,8 +12,16 @@
  * functions.
  */
 
-int parseCommand(char* command, char* args) {
-
+int parseCommand(char* command, char* args[]) {
+    // Loop help found from: http://stackoverflow.com/questions/3889992/how-does-strtok-split-the-string-into-tokens-in-c/3890186#3890186
+    int i = 0;
+    char* a;
+    for (a = strtok(command, DELIMITER); a != NULL; a = strtok(NULL, DELIMITER)) {
+        args[i] = a;
+        i++;
+    }
+    args[i] = '\0';
+    printf("Args: %s => %s\n", args[0], args[1]);
 }
 
 int main() {
@@ -26,18 +34,20 @@ int main() {
 
     while(!feof(stdin)) {
         fgets(command, MAX_COMMAND_LENGTH, stdin);
+        printf("Command: %s\n", command);
         int commandLength = strlen(command);
 
         // Terminating null for end of command.
         command[commandLength - 1] = '\0';
 
         // Delete trailing whitespace.
-        while(strcmp(&command[commandLength - 2], DELIMITER) == 0){
-            command[commandLength - 2] = 0;
+        while(strcmp(&command[commandLength - 2], DELIMITER) == 0) {
+            command[commandLength - 2] = '\0';
             commandLength--;
         }
 
-        printf("%s\n", command);
+        parseCommand(command, args);
+        printf("Command: %s\n", command);
 
         /* Variable that will store the fork result. */
         pid_t pid;
