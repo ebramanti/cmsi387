@@ -23,7 +23,6 @@ int parseCommand(char* command, char* args[]) {
         i++;
     }
     args[i] = '\0';
-    printf("Args: %s => %s\n", args[0], args[1]);
 }
 
 int main() {
@@ -35,9 +34,8 @@ int main() {
     printf("Enter the command to run:\n");
 
     while(!feof(stdin)) {
-        fputs(COMMAND_LINE_INDICATOR, stdout);
+        fputs(SHELL_INDICATOR, stdout);
         fgets(command, MAX_COMMAND_LENGTH, stdin);
-        printf("Command: %s\n", command);
         int commandLength = strlen(command);
 
         // Terminating null for end of command.
@@ -55,27 +53,37 @@ int main() {
         }
 
         parseCommand(command, args);
-        printf("Command: %s\n", command);
-
-        /* Variable that will store the fork result. */
-        pid_t pid;
-
-        /* Perform the actual fork. */
-        pid = fork();
-        if (pid < 0) {
-            /* Error condition. */
-            fprintf(stderr, "Fork failed\n");
-            return -1;
-        } else if (pid == 0) {
-            /* Child process. */
-            printf("Running...\n");
-            args[0] = "ls";
-            execvp(args[0], args);
+        if (strcmp(args[0], "exit") == 0) {
+            return; // Exit the shell.
+        } else if (strcmp(args[0], "cd") == 0) {
+            //http://www.tutorialspoint.com/unix_system_calls/chdir.htm
+            chdir(args[1]);
+        } else if (strcmp(args[0], "secret-system-call") == 0) {
+            // Since my kernel was designed for a phone, this will just print a message.
+            // An example of what I would call is shown below.
+            // syscall(378);
+            char* androidMessage = "This would normally print my secret system call on a Nexus 4 running my custom-built Android kernel.\n";
+            fputs(androidMessage, stdout);
         } else {
-            /* Parent process. */
-            int result;
-            wait(&result);
-            printf("All done; result = %d\n", result);
+            /* Variable that will store the fork result. */
+            pid_t pid;
+
+            /* Perform the actual fork. */
+            pid = fork();
+            if (pid < 0) {
+                /* Error condition. */
+                fprintf(stderr, "Fork failed\n");
+                return -1;
+            } else if (pid == 0) {
+                /* Child process. */
+                printf("Running...\n");
+                execvp(args[0], args);
+            } else {
+                /* Parent process. */
+                int result;
+                wait(&result);
+                printf("All done; result = %d\n", result);
+            }
         }
     }
 
