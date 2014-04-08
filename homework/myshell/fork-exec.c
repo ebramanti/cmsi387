@@ -1,4 +1,5 @@
 #include <sys/types.h>
+#include <sys/wait.h> // needed to remove warning.
 #include <stdio.h>
 #include <unistd.h>
 #include <string.h>
@@ -23,6 +24,7 @@ int parseCommand(char* command, char* args[]) {
         i++;
     }
     args[i] = '\0';
+    return 0;
 }
 
 int main() {
@@ -40,20 +42,20 @@ int main() {
 
         if (commandLength > 0) {
             // Delete trailing whitespace.
-            while(strcmp(&command[commandLength - 2], DELIMITER) == 0) {
-                command[commandLength - 2] = '\0';
+            while(strcmp(&command[commandLength - 1], DELIMITER) == 0) {
+                command[commandLength - 1] = '\0';
                 commandLength--;
             }
             // A check for the concurrency command.
             int waitCheck = 0;
-            while(strcmp(&command[commandLength - 2], WAIT_CHARACTER) == 0) {
-                command[commandLength - 2] = '\0';
+            while(strcmp(&command[commandLength - 1], WAIT_CHARACTER) == 0) {
+                command[commandLength - 1] = '\0';
                 waitCheck = 1;
             }
 
             parseCommand(command, args);
             if (strcmp(args[0], "exit") == 0) {
-                return; // Exit the shell.
+                return 1; // Exit the shell.
             } else if (strcmp(args[0], "cd") == 0) {
                 //http://www.tutorialspoint.com/unix_system_calls/chdir.htm
                 chdir(args[1]);
