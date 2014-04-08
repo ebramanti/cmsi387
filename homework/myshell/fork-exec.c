@@ -7,6 +7,7 @@
 #define MAX_ARGS_LENGTH 256
 #define DELIMITER "\x20\n"
 #define WAIT_CHARACTER "&"
+#define SHELL_INDICATOR ">>> "
 
 /**
  * This program demonstrates the use of the fork() and exec()
@@ -31,9 +32,10 @@ int main() {
     char* args[MAX_ARGS_LENGTH];
 
 
-    printf("Enter the command to run: ");
+    printf("Enter the command to run:\n");
 
     while(!feof(stdin)) {
+        fputs(COMMAND_LINE_INDICATOR, stdout);
         fgets(command, MAX_COMMAND_LENGTH, stdin);
         printf("Command: %s\n", command);
         int commandLength = strlen(command);
