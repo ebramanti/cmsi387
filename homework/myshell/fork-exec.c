@@ -5,6 +5,7 @@
 
 #define MAX_COMMAND_LENGTH 256
 #define MAX_ARGS_LENGTH 256
+#define DELIMITER "\x20\n"
 
 /**
  * This program demonstrates the use of the fork() and exec()
@@ -22,9 +23,20 @@ int main() {
 
 
     printf("Enter the command to run: ");
-    
+
     while(!feof(stdin)) {
         fgets(command, MAX_COMMAND_LENGTH, stdin);
+        int commandLength = strlen(command);
+
+        // Terminating null for end of command.
+        command[commandLength - 1] = '\0';
+
+        // Delete trailing whitespace.
+        while(strcmp(&command[commandLength - 2], DELIMITER) == 0){
+            command[commandLength - 2] = 0;
+            commandLength--;
+        }
+
         printf("%s\n", command);
 
         /* Variable that will store the fork result. */
