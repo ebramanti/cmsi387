@@ -7,7 +7,7 @@
 #define MAX_ARGS_LENGTH 256
 #define DELIMITER "\x20\n"
 #define WAIT_CHARACTER "&"
-#define SHELL_INDICATOR ">>> "
+#define SHELL_INDICATOR "$ "
 
 /**
  * This program demonstrates the use of the fork() and exec()
@@ -76,13 +76,14 @@ int main() {
                 return -1;
             } else if (pid == 0) {
                 /* Child process. */
-                printf("Running...\n");
                 execvp(args[0], args);
             } else {
                 /* Parent process. */
                 int result;
-                wait(&result);
-                printf("All done; result = %d\n", result);
+                //  Do not stop process if wait command is used.
+                if (!waitCheck) {
+                    wait(&result);
+                }
             }
         }
     }
