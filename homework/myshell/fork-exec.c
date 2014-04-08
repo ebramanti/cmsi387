@@ -6,6 +6,7 @@
 #define MAX_COMMAND_LENGTH 256
 #define MAX_ARGS_LENGTH 256
 #define DELIMITER "\x20\n"
+#define WAIT_CHARACTER "&"
 
 /**
  * This program demonstrates the use of the fork() and exec()
@@ -39,11 +40,16 @@ int main() {
 
         // Terminating null for end of command.
         command[commandLength - 1] = '\0';
-
         // Delete trailing whitespace.
         while(strcmp(&command[commandLength - 2], DELIMITER) == 0) {
             command[commandLength - 2] = '\0';
             commandLength--;
+        }
+        // A check for the concurrency command.
+        int waitCheck = 0;
+        while(strcmp(&command[commandLength - 2], WAIT_CHARACTER) == 0) {
+            command[commandLength - 2] = '\0';
+            waitCheck = 1;
         }
 
         parseCommand(command, args);
