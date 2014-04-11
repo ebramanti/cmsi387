@@ -17,6 +17,14 @@ Katseff offers up the idea of allowing processes to enter their critical section
 
 Katseff is citing previous work of his own in the field, which leads me to believe that he is addressing this with a mentality of going over his own work. Once again, since this is found on ACM's Digital Library, the work proves its validity. It cites multiple researchers who have done work on this problem, and provided examples of problems with each. This makes Katseff's presentation of the issue more valid.
 
+### Article 3: A New Solution to Lamport's Concurrent Programming Problem Using Small Shared Variables by Gary L. Peterson
+
+The article is connected to Lamport's solution to Dijkstra's concurrent programming problem. It also cites both of the previous works that we compared to, both Knuth's comments on concurrent programming control and Dijkstra's solution from 1965.
+
+Peterson's new solution to concurrent programming control prevents process failures and restarts by using a new algorithm. The algorithm uses four values of shared memory per process, as shown by the title of "using small shared variables." Peterson argues that using this method will help lower the rate of failures. He also argues that if failures are rare, then the clock will most likely stabilize and the processes are more likely to tick in unison than before. He does contend that while his algorithm allows for a more stable clock, the number of values when using small shared variables is worse than exponential.
+
+Peterson's work is not as strong as the previous work studied. It has less references, and while it does build upon previous solutions of Dijkstra, Knuth, and Lamport, there is still room to improve upon the work, especially since the small shared variables is worse than exponential. Nevertheless, Peterson's work improves upon some of the problems that Lamport ran into, and using shared variables provides a solid solution to both process failures and forced restarts. Peterson doesn't even have to worry about those types of errors like Lamport's solution.
+
 
 
 
