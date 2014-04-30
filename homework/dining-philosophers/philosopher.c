@@ -37,10 +37,10 @@ void eating() {
     // TODO
 }
 
-void run_philosopher(void* philosopher, void* state, void* chopsticks, void* chopstickState) {
-    // NOT DONE. An outline for how while loop should work.
+void run_philosopher(int philosopher) {
     display_philosopher();
-    int currentState = state[philosopher]
+    int* currentState = philosopher_state[philosopher];
+    // STILL UNIMPLEMENTED.
     while (1) {
         display_philosopher();
         if (currentState == THINKING) {

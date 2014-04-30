@@ -14,14 +14,6 @@ pthread_t philosopher[NUM];
 pthread_mutex_t chopsticks[NUM];
 
 /**
- * Thread runner for the philosophers.
- */
-void *chopstickRunner(void *philosophers, int *philosopherState, void *chopsticks, int *chopstickState) {
-    printf("Executing philosopher process.\n");
-    run_philosopher(philosophers, philosopherState, chopsticks, chopstickState);
-}
-
-/**
  * Overall driver program.
  */
 int main(int argc, char** argv) {
@@ -31,7 +23,7 @@ int main(int argc, char** argv) {
     for (int i = 0; i < NUM; i++) {
         philosopher_state[i] = THINKING;
         chopstick_state[i] = 0;
-        pthread_create(&philosophers[i], NULL,chopstickRunner, i);
+        pthread_create(&philosophers[i], NULL,run_philosopher, i);
         pthread_mutex_init(&chopsticks[i], NULL);
     }
 
