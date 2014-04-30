@@ -13,9 +13,6 @@ int philosopher_state[NUM];
 pthread_t philosopher[NUM];
 pthread_mutex_t chopsticks[NUM];
 
-/* The test harness defines the expected interfaces. */
-
-
 /**
  * Thread runner for the philosophers.
  */
