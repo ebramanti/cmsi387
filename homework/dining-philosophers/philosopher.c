@@ -1,13 +1,10 @@
 /**
- * Consumer implementation.
+ * Philosopher library implementation.
  */
-#include "bb-cs.h"
 #include "utility.h"
 
 #include <pthread.h>
-#include <semaphore.h>
 #include <stdio.h>
-
 
 
 void get_chopstick() {

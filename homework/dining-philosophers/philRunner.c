@@ -4,8 +4,6 @@
 #include <pthread.h>
 #include <stdio.h>
 
-#include "bb-sync.h"
-
 // Number of philosophers and chopsticks.
 #define NUM 5
 
