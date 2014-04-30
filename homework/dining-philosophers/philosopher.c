@@ -12,28 +12,29 @@
 #define HAS_CHOP 2
 #define HAS_TWO_CHOP 3
 #define EATING 4
+#define NUM 5
 
 void display_philosopher() {
     // TODO for printing out state of philosophers.
 }
 
-void think() {
+void think(int philosopher) {
     // TODO
 }
 
-void hungry() {
+void hungry(int philosopher) {
     // TODO
 }
 
-void has_one_chop() {
+void has_one_chop(int philosopher, int chopstick) {
     // TODO
 }
 
-void has_two_chop() {
+void has_two_chop(int philosopher, int chopstick) {
     // TODO
 }
 
-void eating() {
+void eating(int philosopher) {
     // TODO
 }
 
