@@ -4,8 +4,6 @@
 #ifndef __BB_CS__
 #define __BB_CS__
 
-#include "buffer.h"
-
 /**
  * Adds the given item to the buffer.
  */

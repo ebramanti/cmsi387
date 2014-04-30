@@ -2,7 +2,6 @@
  * Implementation (and privates) for critical-section functions.
  */
 #include "bb-cs.h"
-#include "buffer.h"
 
 #include <stdio.h>
 #include <string.h>

@@ -20,16 +20,14 @@ pthread_t philosopher[NUM];
 pthread_mutex_t chopsticks[NUM];
 
 /* The test harness defines the expected interfaces. */
-void *produce(int produceBound);
-void *consume(int consumeBound);
+
 
 /**
- * Thread runner for the consumer.
+ * Thread runner for the philosophers.
  */
-void *chopstickRunner(void *arg, void *arg2) {
-    //printf("Starting consumer\n");
-    //printf("Ending consumer\n");
-    pthread_exit(NULL);
+void *chopstickRunner(void *philosophers) {
+    printf("Executing philosopher process.\n");
+    run_philosopher(philosophers, philosopher_state);
 }
 
 /**
@@ -38,22 +36,13 @@ void *chopstickRunner(void *arg, void *arg2) {
 int main(int argc, char** argv) {
     printf("Starting Dining Philosophers Program...\n");
 
-    /* Initialize the synchronization primitives. */
-    initSync();
-
-    /* Start the threads. */
-
+    /* Create threads and initialize mutexes. */
     for (int i = 0; i < NUM; i++) {
         philosopher_state[i] = THINKING;
         chopstick_state[i] = 0;
         pthread_create(&philosophers[i], NULL,/*need value here*/, i);
         pthread_mutex_init(&chopsticks[i], NULL);
     }
-
-
-    /*pthread_t prod, cons;
-    pthread_create(&prod, NULL, prodRunner, (void *)2);
-    pthread_create(&cons, NULL, consRunner, (void *)3); */
 
     /* Not really needed, since we'll pretty much run forever... */
     for (int i = 0; i < NUM; i++) {
