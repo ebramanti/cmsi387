@@ -25,9 +25,9 @@ pthread_mutex_t chopsticks[NUM];
 /**
  * Thread runner for the philosophers.
  */
-void *chopstickRunner(void *philosophers) {
+void *chopstickRunner(void *philosophers, int *philosopherState, void *chopsticks, int *chopstickState) {
     printf("Executing philosopher process.\n");
-    run_philosopher(philosophers, philosopher_state);
+    run_philosopher(philosophers, pphilosopherState, chopsticks, chopstickState);
 }
 
 /**
@@ -40,7 +40,7 @@ int main(int argc, char** argv) {
     for (int i = 0; i < NUM; i++) {
         philosopher_state[i] = THINKING;
         chopstick_state[i] = 0;
-        pthread_create(&philosophers[i], NULL,/*need value here*/, i);
+        pthread_create(&philosophers[i], NULL,chopstickRunner, i);
         pthread_mutex_init(&chopsticks[i], NULL);
     }
 
