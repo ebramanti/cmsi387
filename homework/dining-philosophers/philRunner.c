@@ -4,12 +4,8 @@
 #include <pthread.h>
 #include <stdio.h>
 
-// Number of philosophers and chopsticks.
-#define NUM 5
-
+#define NUM 5 // Number of philosophers and chopsticks.
 #define THINKING 0
-#define HAS_CHOPSTICK 1
-#define EATING 2
 
 int chopstick_state[NUM];
 int philosopher_state[NUM];
@@ -25,7 +21,7 @@ pthread_mutex_t chopsticks[NUM];
  */
 void *chopstickRunner(void *philosophers, int *philosopherState, void *chopsticks, int *chopstickState) {
     printf("Executing philosopher process.\n");
-    run_philosopher(philosophers, pphilosopherState, chopsticks, chopstickState);
+    run_philosopher(philosophers, philosopherState, chopsticks, chopstickState);
 }
 
 /**
