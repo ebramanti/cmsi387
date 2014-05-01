@@ -7,47 +7,44 @@
 #include <semaphore.h>
 #include <stdio.h>
 
-#define NUM 5
+#define NUM_OF_PHILS 5
 
 #define THINKING 0
 #define HUNGRY 1
-#define HAS_CHOP 2
-#define EATING 3
+#define EATING 2
 
 void display_philosopher() {
-    // TODO for printing out state of philosophers.
-}
-
-void think(int philosopher) {
-    randomWait(NUM);
-    philosopher_state[philosopher] = HUNGRY;
-}
-
-void hungry(int philosopher) {
-    randomWait(NUM);
-    getChopstick(philosopher);
-    philosopher_state[philosopher] = HAS_CHOP;
-}
-
-void has_one_chop(int philosopher) {
-    getChopstick(philosopher);
-    if (philosopher_state[philosopher] != THINKING) {
-        getChopstick((philosopher + 1) % NUM);
-        if (philosopher_state[philosopher] == HAS_CHOP) {
-            philosopher_state[philosopher] = EATING;
-            randomWait(NUM);
+    for (int i = 0; i < NUM_OF_PHILS; i++) {
+        if (philosopher_state[i] == THINKING) {
+            printf("THINKING ");
+        } else if (philosopher_state[i] == HUNGRY) {
+            printf("HUNGRY ");
+        } else if (philosopher_state[i] == EATING) {
+            printf("EATING ");
         }
     }
 }
 
+void think(int philosopher) {
+    randomWait(NUM_OF_PHILS);
+    philosopher_state[philosopher] = HUNGRY;
+}
+
+void hungry(int philosopher) {
+    getChopstick(philosopher);
+    getChopstick((philosopher + 1) % NUM_OF_PHILS);
+    philosopher_state[philosopher] = EATING;
+    randomWait(NUM_OF_PHILS);
+}
+
 void eating(int philosopher) {
     releaseChopstick(philosopher);
-    releaseChopstick((philosopher + 1) % NUM);
+    releaseChopstick((philosopher + 1) % NUM_OF_PHILS);
     philosopher_state[philosopher] = THINKING;
 }
 
 int getChopstick(int chopstick) {
-    if (chopstick > NUM) {
+    if (chopstick > NUM_OF_PHILS) {
         printf("Index out of bounds.");
         return -1;
     }
@@ -61,7 +58,7 @@ int getChopstick(int chopstick) {
 }
 
 int releaseChopstick(int chopstick) {
-    if (chopstick > NUM) {
+    if (chopstick > NUM_OF_PHILS) {
         printf("Index out of bounds.");
         return -1;
     }
