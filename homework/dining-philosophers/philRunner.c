@@ -23,7 +23,7 @@ int main(int argc, char** argv) {
     for (int i = 0; i < NUM; i++) {
         philosopher_state[i] = THINKING;
         chopstick_state[i] = 0;
-        pthread_create(&philosophers[i], NULL,run_philosopher, i);
+        pthread_create(&philosophers[i], NULL, run_philosopher, i);
         pthread_mutex_init(&chopsticks[i], NULL);
     }
 
