@@ -6,4 +6,4 @@ philosopher.o: utility.h
 utility.o: utility.h
 
 clean:
-	rm bb *.o
+	rm dining-philosopher *.o
