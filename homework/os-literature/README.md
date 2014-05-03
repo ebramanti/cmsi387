@@ -3,6 +3,11 @@ Operating Systems Literature Analysis
 
 ### Article 1: Limitations of Dijkstra's Semaphore Primitives and Petri nets by S. Rao Kosaraju
 
+> JD: I guess I made an assumption that you'd know to do this---when you are asked for any kind of
+>     "bibliography," the expectation is that you provide a full citation of the articles that you
+>     list.  You do provide further information in your writeup but really they should all go in
+>     one overall entry each.
+
 This article is connected to the original work because it studies the limitations of Dijkstra's semaphore primitives that he postulates about in his original work in 1965. They expand upon Dijkstra's findings by focusing on areas of his original research that have been improved upon and through discussion of the work of multiple researchers who have studied Dijkstra's solution.
 
 This article approaches the original work in an entirely different way. While Dijkstra's original method was to use P and V primitives, they are considered to be indivisible in this work. Kosaraju studies a better approach through a work by Patil and his discovery, which he calls "CSP," or the "Cigarette Smoker's Problem." Patil suggests a generalization of the P primitive as a better method. Patil's work is even expanded upon, with Parnas' work to further the study of Patil's "Cigarette Smoker's Problem," showing that using an array of semaphores brings this issue Patil discovered back. Parnas solves this problem by making arrays of semaphores that are finite and bounded.
