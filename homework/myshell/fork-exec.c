@@ -14,9 +14,11 @@
  * This program demonstrates the use of the fork() and exec()
  * functions.
  */
+// JD: ^^^Way more than that now!
 
 int parseCommand(char* command, char* args[]) {
     // Loop help found from: http://stackoverflow.com/questions/3889992/how-does-strtok-split-the-string-into-tokens-in-c/3890186#3890186
+    // JD: Indeed, that be some fancy for-looping :)
     int i = 0;
     char* a;
     for (a = strtok(command, DELIMITER); a != NULL; a = strtok(NULL, DELIMITER)) {
@@ -65,6 +67,7 @@ int main() {
                 // syscall(378);
                 char* androidMessage = "This would normally print my secret system call on a Nexus 4 running my custom-built Android kernel.\n";
                 fputs(androidMessage, stdout);
+                // JD: OK acceptable :)
             } else {
                 /* Variable that will store the fork result. */
                 pid_t pid;

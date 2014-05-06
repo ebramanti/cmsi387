@@ -16,6 +16,13 @@ I opened up Activity Monitor, and found the command running under `java`. At the
 
 ![Mac Process Activity Monitor](MacActivityMonitor.png)
 
+> JD: You may have had another one running that you overlooked—had you really "cancelled" the
+>     other one, then that process should have quit.  But either way, GG, you spotted some
+>     OS-level evidence of thread action.
+>
+>     But why just one summation?  Didn't you want to watch like 5-10 concurrent summation
+>     threads going at it at the same time? `:)`
+
 ####Linux
 
 Next, I ran `thread-java` on an Ubuntu virtual machine. I used a very similar process, I invoked the command `java Sum 1000000` and then suspended the process temporarily with `CTRL-Z`. I then ran the same command as on Mac, `bg && ping localhost`, to send the Sum to the background and then `ping localhost`as well. Screenshot below:
@@ -26,3 +33,7 @@ I used both Ubuntu's GUI and the command line as an Activity Monitor. I first to
 
 To find the thread count, I knew I needed to use the command line. I called `ps aux | grep java` as extra practice for figuring out the process ID. I found that it returned two values: both the grep call and the actual process we need, `java Sum`. It was clear that the PID was `10204`. I then used the command `ps -o nlwp 10204`, and this allowed me to see the amount of threads running for the sum process. It turned out to be 11.
 ![Ubuntu Process Activity Monitor](LinuxActivityMonitor.png)
+
+> JD: You got off to a good start here and certainly made some headway, but even more
+>     information would have been staring at you had you dug into what an "LWP" was
+>     even more.  There's a nice nugget in there that I was hoping you would find.
