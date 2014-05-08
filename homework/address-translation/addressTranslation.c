@@ -22,6 +22,7 @@ int getPhysical(int logical) {
     }
 
     int left = (logical & PAGEMASK) >> PAGEBITS;
+   // JD: No need for the "&"---you're right-shifting!
     int right = logical & PAGESIZE;
 
     if (ptr[left].valid == 0) {
