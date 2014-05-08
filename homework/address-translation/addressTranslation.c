@@ -13,6 +13,10 @@ void setPageTable(pagetable *pt) {
 }
 
 int getPhysical(int logical) {
+    // JD: For full robustness, you could have computed the maximum
+    //     condition based on the #defines in addressTranslation.h.
+    //     That way, switching to a different configuration would have
+    //     been a matter of changing the #defines.
     if (logical < 0 || logical >= 256) {
         return ERR_OUT_OF_RANGE;
     }
