@@ -51,24 +51,12 @@ void display_philosopher() {
 
 int releaseChopstick(int chopstick) {
     if (chopstick > NUM_OF_PHILS) {
-        // JD: On any kind of horrible error, you shouldn't just return from
-        //     the function; you should *exit entirely*.  Otherwise you just
-        //     go back to the loop and things just keep on going.
         printf("Index out of bounds.\n");
-        return -1;
         exit(-1);
     }
-    // JD: So, this error message appears when I run your program.
-    //     BIG PROBLEM---this means that a philosopher tries to
-    //     release a chopstick *that is not taken*.  You shouldn't
-    //     just return from the function here; you should actually
-    //     quit the entire program!
-    //
-    //     (and the fact that this happens in your program is a
-    //     sign that you aren't doing mutual exclusion right)
     else if (chopstick_state[chopstick] == 0) {
         printf("Chopstick %d not taken.\n", chopstick);
-        return -1;
+        exit(-1);
     }
     pthread_mutex_unlock(&chopsticks[chopstick]);
     // JD: Don't change the state of a chopstick *outside* of the protected
@@ -82,7 +70,7 @@ int releaseChopstick(int chopstick) {
 int getChopstick(int chopstick) {
     if (chopstick > NUM_OF_PHILS) {
         printf("Index out of bounds.\n");
-        return -1;
+        exit(-1);
     }
     // JD: Meanwhile, *this* error check is wrong because it is
     //     in the wrong place.  It is the job of the mutex/semaphore
@@ -93,7 +81,7 @@ int getChopstick(int chopstick) {
     //     wait for it*.
     else if (chopstick_state[chopstick] == 1) {
         printf("Chopstick %d already taken.\n", chopstick);
-        return -1;
+        exit(-1);
     }
     pthread_mutex_lock(&chopsticks[chopstick]);
     chopstick_state[chopstick] += 1;
@@ -129,8 +117,8 @@ void* run_philosopher(void* philosopher) {
         } else if (philosopher_state[index] == HUNGRY) {
             hungry(index);
         } else {
-            // THIS IS BAD.
-            // JD: So why is the program quiet?
+            printf("Unexpected state detected. Exiting program.\n");
+            exit(-1);
         }
 
         // JD: Remember, this is in a thread that is running concurrently with
