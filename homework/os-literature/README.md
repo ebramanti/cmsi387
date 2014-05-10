@@ -3,11 +3,6 @@ Operating Systems Literature Analysis
 
 ### Article 1: Limitations of Dijkstra's Semaphore Primitives and Petri nets by S. Rao Kosaraju
 
-> JD: I guess I made an assumption that you'd know to do this---when you are asked for any kind of
->     "bibliography," the expectation is that you provide a full citation of the articles that you
->     list.  You do provide further information in your writeup but really they should all go in
->     one overall entry each.
-
 This article is connected to the original work because it studies the limitations of Dijkstra's semaphore primitives that he postulates about in his original work in 1965. They expand upon Dijkstra's findings by focusing on areas of his original research that have been improved upon and through discussion of the work of multiple researchers who have studied Dijkstra's solution.
 
 This article approaches the original work in an entirely different way. While Dijkstra's original method was to use P and V primitives, they are considered to be indivisible in this work. Kosaraju studies a better approach through a work by Patil and his discovery, which he calls "CSP," or the "Cigarette Smoker's Problem." Patil suggests a generalization of the P primitive as a better method. Patil's work is even expanded upon, with Parnas' work to further the study of Patil's "Cigarette Smoker's Problem," showing that using an array of semaphores brings this issue Patil discovered back. Parnas solves this problem by making arrays of semaphores that are finite and bounded.
@@ -29,6 +24,15 @@ The article is connected to Lamport's solution to Dijkstra's concurrent programm
 Peterson's new solution to concurrent programming control prevents process failures and restarts by using a new algorithm. The algorithm uses four values of shared memory per process, as shown by the title of "using small shared variables." Peterson argues that using this method will help lower the rate of failures. He also argues that if failures are rare, then the clock will most likely stabilize and the processes are more likely to tick in unison than before. He does contend that while his algorithm allows for a more stable clock, the number of values when using small shared variables is worse than exponential.
 
 Peterson's work is not as strong as the previous work studied. It has less references, and while it does build upon previous solutions of Dijkstra, Knuth, and Lamport, there is still room to improve upon the work, especially since the small shared variables is worse than exponential. Nevertheless, Peterson's work improves upon some of the problems that Lamport ran into, and using shared variables provides a solid solution to both process failures and forced restarts. Peterson doesn't even have to worry about those types of errors like Lamport's solution.
+
+
+
+##### *Sources*
+*Howard P. Katseff. 1978. A new solution to the critical section problem. In Proceedings of the tenth annual ACM symposium on Theory of computing (STOC '78). ACM, New York, NY, USA, 86-88. DOI=10.1145/800133.804335 http://doi.acm.org/10.1145/800133.804335*
+
+*S. Rao Kosaraju. 1973. Limitations of Dijkstra's Semaphore Primitives and Petri nets. In Proceedings of the fourth ACM symposium on Operating system principles (SOSP '73). ACM, New York, NY, USA, 122-126. DOI=10.1145/800009.808062 http://doi.acm.org/10.1145/800009.808062*
+
+*Gary L. Peterson. 1983. A New Solution to Lamport's Concurrent Programming Problem Using Small Shared Variables. ACM Trans. Program. Lang. Syst. 5, 1 (January 1983), 56-65. DOI=10.1145/357195.357199 http://doi.acm.org/10.1145/357195.357199*
 
 
 
