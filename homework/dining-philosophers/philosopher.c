@@ -29,6 +29,12 @@ const char* chopstickTaken = "x";
 void display_philosopher() {
     pthread_mutex_lock(&display_mutex);
     canPrint = 0;
+    // JD: ^^^^^OK, so now this one is overkill.  Put things in context:
+    //     the purpose of *this* lock is to make sure that display_philosopher
+    //     doesn't print on top of itself.  You'll kinda know if it isn't
+    //     working, and in the end it is part of the scaffolding for the
+    //     program, not the dining philosophers system itself.  So, no need
+    //     for canPrint.
     if (canPrint == 1) {
         printf("Illegal state detected in printing.\n");
         exit(-1);
@@ -53,7 +59,7 @@ int releaseChopstick(int chopstick) {
     if (chopstick > NUM_OF_PHILS) {
         printf("Index out of bounds.\n");
         exit(-1);
-    }
+    } // JD: Why am I seeing "}" and "else if" on different lines so often now?
     else if (chopstick_state[chopstick] == 0) {
         printf("Chopstick %d not taken.\n", chopstick);
         exit(-1);
@@ -130,6 +136,7 @@ int main () {
     }
 
     /* Not really needed, since we'll pretty much run forever... */
+    // JD: Be careful what you say---have you *tried* to comment this out?  O_o
     for (int i = 0; i < NUM_OF_PHILS; i++) {
         pthread_join(philosophers[i], NULL);
     }
