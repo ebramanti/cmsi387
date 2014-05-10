@@ -4,6 +4,7 @@
 #include "utility.h"
 #include <pthread.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 #define NUM_OF_PHILS 5
 #define THINKING 0
@@ -12,8 +13,13 @@
 
 pthread_t philosophers[NUM_OF_PHILS];
 pthread_mutex_t chopsticks[NUM_OF_PHILS];
+pthread_mutex_t display_mutex;
 int philosopher_state[NUM_OF_PHILS];
 int chopstick_state[NUM_OF_PHILS];
+int canPrint;
+
+const char* chopstickAvailable = "|";
+const char* chopstickTaken = "x";
 
 // JD: This display approach is OK but is missing one important state---
 //     who is holding what chopstick.  Very important for ensuring that
@@ -21,17 +27,26 @@ int chopstick_state[NUM_OF_PHILS];
 //
 //     (as you will see in my later notes)
 void display_philosopher() {
+    pthread_mutex_lock(&display_mutex);
+    canPrint = 0;
+    if (canPrint == 1) {
+        printf("Illegal state detected in printing.\n");
+        exit(-1);
+    }
     for (int i = 0; i < NUM_OF_PHILS; i++) {
+        const char* cs = chopstick_state[i] == 0 ? chopstickAvailable : chopstickTaken;
         int currentState = philosopher_state[i];
         if (currentState == THINKING) {
-            printf("THINKING ");
+            printf("%s THINKING ", cs);
         } else if (currentState == HUNGRY) {
-            printf("HUNGRY ");
+            printf("%s HUNGRY ", cs);
         } else if (currentState == EATING) {
-            printf("EATING ");
+            printf("%s EATING ", cs);
         }
     }
     printf("\n");
+    canPrint = 1;
+    pthread_mutex_unlock(&display_mutex);
 }
 
 int releaseChopstick(int chopstick) {
@@ -41,6 +56,7 @@ int releaseChopstick(int chopstick) {
         //     go back to the loop and things just keep on going.
         printf("Index out of bounds.\n");
         return -1;
+        exit(-1);
     }
     // JD: So, this error message appears when I run your program.
     //     BIG PROBLEM---this means that a philosopher tries to
@@ -59,6 +75,7 @@ int releaseChopstick(int chopstick) {
     //     area!  Done this way, your mutex activities are useless.
     //     This is one reason that you're getting the errors.
     chopstick_state[chopstick] -= 1;
+    pthread_mutex_unlock(&chopsticks[chopstick]);
     return 0;
 }
 
@@ -104,6 +121,7 @@ void eating(int philosopher) {
 void* run_philosopher(void* philosopher) {
     int index = *(int*) philosopher;
     while (1) {
+        display_philosopher(); // Implemented check for concurrency so this won't print multiple times.
         if (philosopher_state[index] == EATING) {
             eating(index);
         } else if (philosopher_state[index] == THINKING) {
@@ -131,6 +149,8 @@ void* run_philosopher(void* philosopher) {
 int main () {
     printf("Starting Dining Philosophers Program...\n");
     /* Create threads and initialize mutexes. */
+    canPrint = 1;
+    pthread_mutex_init(&display_mutex, NULL);
     int index[NUM_OF_PHILS];
     for (int i = 0; i < NUM_OF_PHILS; i++) {
         index[i] = i;
