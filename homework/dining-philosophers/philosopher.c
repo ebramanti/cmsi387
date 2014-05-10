@@ -58,32 +58,21 @@ int releaseChopstick(int chopstick) {
         printf("Chopstick %d not taken.\n", chopstick);
         exit(-1);
     }
-    pthread_mutex_unlock(&chopsticks[chopstick]);
-    // JD: Don't change the state of a chopstick *outside* of the protected
-    //     area!  Done this way, your mutex activities are useless.
-    //     This is one reason that you're getting the errors.
     chopstick_state[chopstick] -= 1;
     pthread_mutex_unlock(&chopsticks[chopstick]);
     return 0;
 }
 
 int getChopstick(int chopstick) {
+    pthread_mutex_lock(&chopsticks[chopstick]);
     if (chopstick > NUM_OF_PHILS) {
         printf("Index out of bounds.\n");
         exit(-1);
     }
-    // JD: Meanwhile, *this* error check is wrong because it is
-    //     in the wrong place.  It is the job of the mutex/semaphore
-    //     to ensure that a philosopher does not pick up a chopstick
-    //     that is already taken.  Here, you *bail out* if a chopstick
-    //     is taken.  That isn't how it's supposed to work.  If you try
-    //     to lock a chopstick that is taken, *then the mutex lock will
-    //     wait for it*.
     else if (chopstick_state[chopstick] == 1) {
         printf("Chopstick %d already taken.\n", chopstick);
         exit(-1);
     }
-    pthread_mutex_lock(&chopsticks[chopstick]);
     chopstick_state[chopstick] += 1;
     return 0;
 }
@@ -120,14 +109,6 @@ void* run_philosopher(void* philosopher) {
             printf("Unexpected state detected. Exiting program.\n");
             exit(-1);
         }
-
-        // JD: Remember, this is in a thread that is running concurrently with
-        //     others.  You may have noticed that the output of display_philosopher()
-        //     occasionally interleaves with other display_philosopher() calls.
-        //
-        //     Better to do your display inside a critical section, so that another
-        //     concurrent display_philosopher() does not mix in its output.
-        display_philosopher();
     }
 }
 
