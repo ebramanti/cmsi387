@@ -117,6 +117,8 @@ CSI: FS
 
 ### Root Directory Inode
 
+> JD: Well, only up to `18ff`.
+
     00001880  ed 41 e8 03 00 04 00 00  dc 02 63 53 db 02 63 53  |.A........cS..cS|
     00001890  db 02 63 53 00 00 00 00  e8 03 04 00 02 00 00 00  |..cS............|
     000018a0  00 00 00 00 00 00 00 00  0e 00 00 00 00 00 00 00  |................|
@@ -218,6 +220,10 @@ End `willylinker`.
 ### Start of directory entries. 
 I had to use Vim to edit some files, and for some reason it created garbage files, such as the swp, etc.
 
+> JD: Sure, it created some *temporary* files, but why apologize?  Did that mess
+>     up a directory entry?  In particular, how big is the directory entry for
+>     *willylink* anyway?
+
     00003800  02 00 00 00 0c 00 01 02  2e 00 00 00 02 00 00 00  |................|
     00003810  0c 00 02 02 2e 2e 00 00  0b 00 00 00 14 00 0a 02  |................|
     00003820  6c 6f 73 74 2b 66 6f 75  6e 64 00 00 11 00 00 00  |lost+found......|
@@ -232,6 +238,8 @@ I had to use Vim to edit some files, and for some reason it created garbage file
     *
 
 ### Data block for the `lost+found` directory.
+
+> JD: Up until where?  All the way to your next annotation?
 
     00003c00  0b 00 00 00 0c 00 01 02  2e 00 00 00 02 00 00 00  |................|
     00003c10  f4 03 02 02 2e 2e 00 00  00 00 00 00 00 00 00 00  |................|
@@ -278,6 +286,7 @@ I had to use Vim to edit some files, and for some reason it created garbage file
 Once again, garbage can be seen from Vim (txt.swp, etc).
 Willylinker is a symbolic link, and can be seen in the 07 in willylinker section.
 
+> JD: Again, it's really only garbage if it messes things up.  Does it?
 
     00007000  0d 00 00 00 0c 00 01 02  2e 00 00 00 02 00 00 00  |................|
     00007010  0c 00 02 02 2e 2e 00 00  0e 00 00 00 14 00 09 01  |................|
@@ -291,6 +300,8 @@ Willylinker is a symbolic link, and can be seen in the 07 in willylinker section
 
 ### `text1.txt` Data Block
 
+> JD: That's not what the inode says.
+
     00007400  54 68 69 73 20 69 73 20  74 68 65 20 74 6f 70 2d  |This is the top-|
     00007410  6c 65 76 65 6c 20 74 65  73 74 20 66 69 6c 65 2e  |level test file.|
     00007420  0a 00 00 00 00 00 00 00  00 00 00 00 00 00 00 00  |................|
@@ -299,6 +310,8 @@ Willylinker is a symbolic link, and can be seen in the 07 in willylinker section
 
 ### `willy.txt` Data Block
 
+> JD: OK, this is consistent with the inode.
+
     00007800  54 68 69 73 20 69 73 20  74 68 65 20 73 75 62 64  |This is the subd|
     00007810  69 72 65 63 74 6f 72 79  20 57 69 6c 6c 79 20 74  |irectory Willy t|
     00007820  65 73 74 20 66 69 6c 65  2e 0a 00 00 00 00 00 00  |est file........|
@@ -306,6 +319,10 @@ Willylinker is a symbolic link, and can be seen in the 07 in willylinker section
     *
 
 ### `text1.txt` Data Block (Symbolic Link)
+
+> JD: Uhhhh...symbolic links don't have actual data, only the filename
+>     to which they are linked symbolically.  This must be something
+>     else.  Hmmm, I wonder...
 
     00009c00  54 68 69 73 20 69 73 20  74 68 65 20 74 6f 70 2d  |This is the top-|
     00009c10  6c 65 76 65 6c 20 74 65  73 74 20 66 69 6c 65 2e  |level test file.|
